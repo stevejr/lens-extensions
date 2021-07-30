@@ -6,6 +6,8 @@ import { HelmChartsPage } from "./src/pages/helmcharts"
 import { BucketsPage } from "./src/pages/buckets"
 import { HelmRepositoriesPage } from "./src/pages/helmrepositories"
 import { KustomizationPage } from "./src/pages/kustomizations"
+import { Kustomization } from "./src/kustomize-controller/kustomization"
+import { KustomizationDetailsItem } from "./src/kustomize-controller/details/kustomization-details-item"
 // import {GitRepositoryDetailsItem} from "./src/source-controller/details/gitrepository-details"
 
 const enum id {
@@ -106,14 +108,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
     ];
 
-    // kubeObjectDetailItems = [
-    //   {
-    //     kind: "GitRepository",
-    //     apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
-    //     priority: 10,
-    //     components: {
-    //       Details: (props: Renderer.Component.KubeObjectDetailsProps<GitRepository>) => <GitRepositoryDetailsItem {...props} />
-    //     }
-    //   }
-    // ];
+    kubeObjectDetailItems = [
+      {
+        kind: "Kustomization",
+        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
+        priority: 10,
+        components: {
+          Details: (props: Renderer.Component.KubeObjectDetailsProps<Kustomization>) => <KustomizationDetailsItem {...props} />
+        }
+      }
+    ];
 }

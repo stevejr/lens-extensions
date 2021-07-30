@@ -10,6 +10,10 @@ export class Kustomization extends Renderer.K8sApi.KubeObject {
   metadata!: KustomizationMetadata; 
   spec!: KustomizationSpec
   status?: KustomizationStatus
+
+  getDependsOn() {
+    return this.spec?.dependsOn ?? []
+  }
 }
 
 export type KustomizationMetadata = {

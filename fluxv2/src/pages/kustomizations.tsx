@@ -43,12 +43,17 @@ export class KustomizationPage extends React.Component<{ extension: Renderer.Len
             {title: "Namespace", className: "namespace", sortBy: sortBy.namespace},
             {title: "Source", className: "Source"},
             {title: "Path", className: "path"},
+            {title: "Ready", className: "ready"},
+            {title: "Revision", className: "revision"},
+
         ]}
         renderTableContents={(kustomization: Kustomization) => [
           kustomization.getName(),
           kustomization.metadata.namespace,
           this.getKustomizationSource(kustomization),
-          kustomization.spec?.path ?? ""
+          kustomization.spec?.path ?? "",
+          kustomization.status.conditions[0].status,
+          kustomization.status.conditions[0].message
         ]}
         tableProps={{
           customRowHeights: (item: Kustomization, lineHeight, paddings) => {

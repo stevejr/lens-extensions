@@ -61,7 +61,7 @@ export class GitRepositoriesPage extends React.Component<{ extension: Renderer.L
             gitRepository.metadata.namespace,
             gitRepository.spec.url,
             this.getGitRef(gitRepository),
-            gitRepository.status.conditions[0].type,
+            gitRepository.status.conditions[0].status,
             gitRepository.status.conditions[0].message
         ]}
     />

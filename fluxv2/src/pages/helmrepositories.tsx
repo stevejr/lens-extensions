@@ -44,7 +44,7 @@ export class HelmRepositoriesPage extends React.Component<{ extension: Renderer.
             helmRepository.getName(),
             helmRepository.metadata.namespace,
             helmRepository.spec.url,
-            helmRepository.status.conditions[0].type,
+            helmRepository.status.conditions[0].status,
             helmRepository.status.conditions[0].message
         ]}
     />
