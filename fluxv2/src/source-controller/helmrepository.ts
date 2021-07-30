@@ -1,18 +1,18 @@
 import { Renderer } from "@k8slens/extensions";
 
-export class HelmChart extends Renderer.K8sApi.KubeObject {
-  static kind = "HelmChart"
+export class HelmRepository extends Renderer.K8sApi.KubeObject {
+  static kind = "HelmRepository"
   static namespaced = true
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmcharts"
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmrepositories"
 
   kind!: string
   apiVersion!: string
-  metadata!: HelmChartMetadata; 
-  spec!: HelmChartSpec;
-  status?: HelmChartStatus;
+  metadata!: HelmRepositoryMetadata; 
+  spec!: HelmRepositorySpec
+  status?: HelmRepositoryStatus
 }
 
-export type HelmChartMetadata = {
+export type HelmRepositoryMetadata = {
   name: string;
   namespace: string;
   selfLink: string;
@@ -27,23 +27,18 @@ export type HelmChartMetadata = {
   };
 }
 
-export type HelmChartSpec = {
-  chart: string;
-  version?: string;
-  sourceRef: LocalHelmChartSourceReference;
+export type HelmRepositorySpec = {
+  url: string;
+  secretRef?: {
+    name: string;
+  }
+  passCredentials?: boolean;
   interval: string;
-  valuesFiles?: string[];
-  valuesFile?: string;
+  timeout?: string;
   suspend?: boolean;
 }
 
-export type LocalHelmChartSourceReference = {
-  apiVersion?: string;
-  kind: string;
-  name: string;
-}
-
-export type HelmChartStatus = {
+export type HelmRepositoryStatus = {
   observedGeneration?: BigInt;
   conditions?: Condition[];
   url?: string;
@@ -59,7 +54,6 @@ export type Condition = {
   lastTransitionTime: string;
   reason: string;
   message: string
-
 }
 
 export type ConditionStatus = {

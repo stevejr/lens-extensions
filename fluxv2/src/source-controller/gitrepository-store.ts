@@ -1,6 +1,5 @@
-import {Common, Renderer} from "@k8slens/extensions";
-import {GitRepository} from "./gitrepository";
-import { observable, makeObservable } from "mobx";
+import { Renderer } from "@k8slens/extensions";
+import { GitRepository } from "./gitrepository";
 
 export class GitRepositoryApi extends Renderer.K8sApi.KubeApi<GitRepository> {
 }

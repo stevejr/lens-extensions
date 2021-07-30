@@ -1,15 +1,20 @@
-import {Renderer} from "@k8slens/extensions";
+import { Renderer } from "@k8slens/extensions";
 import React from "react"
-import {GitRepository} from "./src/source-controller/gitrepository"
-import {GitRepositoriesPage} from "./src/pages/gitrepositories"
-import {HelmChartsPage} from "./src/pages/helmcharts"
+// import {GitRepository} from "./src/source-controller/gitrepository"
+import { GitRepositoriesPage } from "./src/pages/gitrepositories"
+import { HelmChartsPage } from "./src/pages/helmcharts"
+import { BucketsPage } from "./src/pages/buckets"
+import { HelmRepositoriesPage } from "./src/pages/helmrepositories"
+import { KustomizationPage } from "./src/pages/kustomizations"
+// import {GitRepositoryDetailsItem} from "./src/source-controller/details/gitrepository-details"
 
 const enum id {
   bucket = 'bucket',
   gitRepository = 'gitrepository',
   helmChart = 'helmchart',
   helmRepository = 'helmrepository',
-  sources = 'sources'
+  sources = 'sources',
+  kustomize = 'kustomize'
 }
 
 export function DashboardIcon(props: Renderer.Component.IconProps) {
@@ -31,6 +36,24 @@ export default class FluxV2Extension extends Renderer.LensExtension {
             Page: () => <HelmChartsPage extension={this}/>,
         }
       },
+      {
+        id: id.bucket,
+        components: {
+            Page: () => <BucketsPage extension={this}/>,
+        }
+      },
+      {
+        id: id.helmRepository,
+        components: {
+            Page: () => <HelmRepositoriesPage extension={this}/>,
+        }
+      },
+      {
+        id: id.kustomize,
+        components: {
+            Page: () => <KustomizationPage extension={this}/>,
+        }
+      },
     ];
 
     clusterPageMenus = [
@@ -40,6 +63,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
           components: {
               Icon: DashboardIcon
           }
+      },
+      {
+        parentId: "flux",
+        target: {pageId: id.bucket},
+        title: "Bucket Sources",
+        components: {
+            Icon: DashboardIcon
+        }
       },
       {
         parentId: "flux",
@@ -57,15 +88,31 @@ export default class FluxV2Extension extends Renderer.LensExtension {
             Icon: DashboardIcon
         }
       },
+      {
+        parentId: "flux",
+        target: {pageId: id.helmRepository},
+        title: "HelmRepository Sources",
+        components: {
+            Icon: DashboardIcon
+        }
+      },
+      {
+        parentId: "flux",
+        target: {pageId: id.kustomize},
+        title: "Kustomizations",
+        components: {
+            Icon: DashboardIcon
+        }
+      },
     ];
 
     // kubeObjectDetailItems = [
     //   {
-    //     kind: GitRepository.kind,
+    //     kind: "GitRepository",
     //     apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+    //     priority: 10,
     //     components: {
-    //         Details: (props: VulnerabilityReportDetailsProps) => <VulnerabilityReportDetails
-    //             showObjectMeta={true} {...props} />
+    //       Details: (props: Renderer.Component.KubeObjectDetailsProps<GitRepository>) => <GitRepositoryDetailsItem {...props} />
     //     }
     //   }
     // ];

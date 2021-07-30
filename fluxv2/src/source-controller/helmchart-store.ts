@@ -1,6 +1,5 @@
-import {Common, Renderer} from "@k8slens/extensions";
-import {HelmChart} from "./helmchart";
-import { observable, makeObservable } from "mobx";
+import { Renderer } from "@k8slens/extensions";
+import { HelmChart } from "./helmchart";
 
 export class HelmChartApi extends Renderer.K8sApi.KubeApi<HelmChart> {
 }

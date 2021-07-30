@@ -1,4 +1,4 @@
-import {Renderer} from "@k8slens/extensions";
+import { Renderer } from "@k8slens/extensions";
 
 export class GitRepository extends Renderer.K8sApi.KubeObject {
   static kind = "GitRepository"
@@ -100,5 +100,5 @@ export type Artifact = {
 }
 
 export type ReconcileRequestStatus = {
-  LastHandledReconcileAt: string;
+  lastHandledReconcileAt: string;
 }

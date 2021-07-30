@@ -68,16 +68,3 @@ export class GitRepositoriesPage extends React.Component<{ extension: Renderer.L
     )
   }
 }
-
-// import { Renderer } from "@k8slens/extensions";
-// import React from "react"
-
-// export class FluxSourcesPage extends React.Component<{ extension: Renderer.LensExtension }> {
-//   render() {
-//     return (
-//       <div>
-//         <p>Hello world!</p>
-//       </div>
-//     )
-//   }
-// }
