@@ -46,7 +46,8 @@ export class DependsOnList extends React.Component<Props> {
 
   getKustomizeObjectLink(name: string) {
     console.log(`<Link to={${this.getDependantSelfLink(name)}}>${name}</Link>`);
-    return <Link to={this.getDependantSelfLink(name)}>{name}</Link>
+    const selfLinkUrl = this.getDependantSelfLink(name);
+    return <Link to={getDetailsUrl(selfLinkUrl)}>{name}</Link>
   }
 
   render() {
@@ -72,7 +73,6 @@ export class DependsOnList extends React.Component<Props> {
         >
           <TableHead>
             <TableCell className="name" sortBy={sortBy.name}>Name</TableCell>
-            <TableCell className="nameLink" sortBy={sortBy.name}>Name Link</TableCell>
             <TableCell className="namespace" sortBy={sortBy.namespace}>Namespace</TableCell>
           </TableHead>
           {
@@ -84,8 +84,7 @@ export class DependsOnList extends React.Component<Props> {
                   nowrap
                   // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
-                  <TableCell className="name">{dependent.name}</TableCell>
-                  <TableCell className="nameLink"><Link to={getDetailsUrl(this.getDependantSelfLink(dependent.name))}>{dependent.name}</Link></TableCell>
+                  <TableCell className="name">{this.getKustomizeObjectLink(dependent.name)}</TableCell>
                   <TableCell className="namespace">{dependent?.namespace ?? ""}</TableCell>
                 </TableRow>
               );
