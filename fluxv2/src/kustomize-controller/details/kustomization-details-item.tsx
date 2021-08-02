@@ -28,8 +28,20 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
     return (
       <div className='KustomizationDetailsItem'>
         <KubeObjectMeta object={kustomization} />
+        <Renderer.Component.DrawerItem name="Ready">
+            {kustomization.status.conditions[0].status}
+        </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Last Applied Revision">
+            {kustomization.status.lastAppliedRevision}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Path">
-            {kustomization.spec?.path ?? "" }
+            {kustomization.spec?.path ?? ""}
+        </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Prune">
+            {kustomization.spec?.prune ? "true" : "false"}
+        </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Interval">
+            {kustomization.spec?.interval}
         </Renderer.Component.DrawerItem>
         <KustomizationSource kustomization={kustomization}/>
         <DependsOnList kustomization={kustomization}/>
