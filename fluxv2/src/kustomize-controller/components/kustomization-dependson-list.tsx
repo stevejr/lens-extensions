@@ -45,7 +45,6 @@ export class DependsOnList extends React.Component<Props> {
   }
 
   getKustomizeObjectLink(name: string) {
-    console.log(`<Link to={${this.getDependantSelfLink(name)}}>${name}</Link>`);
     const selfLinkUrl = this.getDependantSelfLink(name);
     return <Link to={getDetailsUrl(selfLinkUrl)}>{name}</Link>
   }

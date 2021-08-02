@@ -3,6 +3,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Kustomization } from "../kustomization"
 import { DependsOnList } from "../components/kustomization-dependson-list"
+import { KustomizationSource } from "../components/kustomization-source"
 
 const {
   Component: {
@@ -27,6 +28,10 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
     return (
       <div className='KustomizationDetailsItem'>
         <KubeObjectMeta object={kustomization} />
+        <Renderer.Component.DrawerItem name="Path">
+            {kustomization.spec?.path ?? "" }
+        </Renderer.Component.DrawerItem>
+        <KustomizationSource kustomization={kustomization}/>
         <DependsOnList kustomization={kustomization}/>
       </div>
     )

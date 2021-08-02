@@ -46,7 +46,7 @@ export type KustomizationSpec = {
   patchesJson6902?: JSON6902Patch[]
   images?: Image[];
   serviceAccountName?: string;
-  sourceRef?: CrossNamespaceSourceReference;
+  sourceRef: CrossNamespaceSourceReference;
   suspend?: boolean;
   targetNamespace?: string;
   timeout?: string;
