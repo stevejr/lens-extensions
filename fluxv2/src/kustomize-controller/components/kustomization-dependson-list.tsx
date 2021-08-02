@@ -1,7 +1,8 @@
 import "./kustomization-dependson-list.scss";
 
-import { Renderer } from "@k8slens/extensions";
+import { Common, Renderer } from "@k8slens/extensions";
 import React from "react";
+import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import type { CrossNamespaceDependencyReference, Kustomization } from "../kustomization";
 import { kustomizationStore } from "../kustomization-store";
@@ -21,6 +22,8 @@ const {
   }
 } = Renderer;
 
+const { prevDefault } = Common.Util;
+
 enum sortBy {
   name = "name",
   namespace = "namespace",
@@ -32,13 +35,18 @@ interface Props {
 
 @observer
 export class DependsOnList extends React.Component<Props> {
-  private sortingCallbacks = {
+  sortingCallbacks = {
     [sortBy.name]: (dependsOn: CrossNamespaceDependencyReference) => dependsOn.name,
     [sortBy.namespace]: (dependsOn: CrossNamespaceDependencyReference) => dependsOn?.namespace,
   };
 
-  private getDependantSelfLink(name: string) {
+  getDependantSelfLink(name: string) {
     return kustomizationStore.getByName(name).selfLink;
+  }
+
+  getKustomizeObjectLink(name: string) {
+    console.log(`<Link to={${this.getDependantSelfLink(name)}}>${name}</Link>`);
+    return <Link to={this.getDependantSelfLink(name)}>{name}</Link>
   }
 
   render() {
@@ -64,6 +72,7 @@ export class DependsOnList extends React.Component<Props> {
         >
           <TableHead>
             <TableCell className="name" sortBy={sortBy.name}>Name</TableCell>
+            <TableCell className="nameLink" sortBy={sortBy.name}>Name Link</TableCell>
             <TableCell className="namespace" sortBy={sortBy.namespace}>Namespace</TableCell>
           </TableHead>
           {
@@ -73,9 +82,10 @@ export class DependsOnList extends React.Component<Props> {
                   key={dependent.name}
                   sortItem={dependent}
                   nowrap
-                  onClick={ (event) => { event.preventDefault(); showDetails(this.getDependantSelfLink(dependent.name), false)}}
+                  // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
                   <TableCell className="name">{dependent.name}</TableCell>
+                  <TableCell className="nameLink"><Link to={getDetailsUrl(this.getDependantSelfLink(dependent.name))}>{dependent.name}</Link></TableCell>
                   <TableCell className="namespace">{dependent?.namespace ?? ""}</TableCell>
                 </TableRow>
               );
@@ -86,9 +96,3 @@ export class DependsOnList extends React.Component<Props> {
     );
   }
 }
-
-// {pods.map(pod => (
-//   <Link key={pod.getId()} to={getDetailsUrl(pod.selfLink)}>
-//     {pod.getName()}
-//   </Link>
-// ))}
