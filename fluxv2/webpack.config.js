@@ -57,6 +57,7 @@ module.exports = [
       {
         "@k8slens/extensions": "var global.LensExtensions",
         "react": "var global.React",
+        'react-router-dom': 'var global.ReactRouterDom',
         "mobx": "var global.Mobx",
         "mobx-react": "var global.MobxReact"
       }
