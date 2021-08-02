@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { Kustomization } from "../kustomization"
 import { DependsOnList } from "../components/kustomization-dependson-list"
 import { KustomizationSource } from "../components/kustomization-source"
+import { PostBuild } from "../components/kustomization-postbuild"
 
 const {
   Component: {
@@ -43,8 +44,12 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
         <Renderer.Component.DrawerItem name="Interval">
             {kustomization.spec?.interval}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Force">
+            {kustomization.spec?.force ? "true" : "false"}
+        </Renderer.Component.DrawerItem>
         <KustomizationSource kustomization={kustomization}/>
         <DependsOnList kustomization={kustomization}/>
+        <PostBuild kustomization={kustomization}/>
       </div>
     )
   }
