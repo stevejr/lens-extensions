@@ -1,6 +1,6 @@
 import "./kustomization-dependson-list.scss";
 
-import { Common, Renderer } from "@k8slens/extensions";
+import { Renderer } from "@k8slens/extensions";
 import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
@@ -9,7 +9,6 @@ import { kustomizationStore } from "../kustomization-store";
 
 const {
   Component: {
-    KubeObjectMenu,
     DrawerTitle,
     Table,
     TableCell,
@@ -18,11 +17,8 @@ const {
   },
   Navigation: {
     getDetailsUrl,
-    showDetails
   }
 } = Renderer;
-
-const { prevDefault } = Common.Util;
 
 enum sortBy {
   name = "name",
@@ -46,7 +42,8 @@ export class DependsOnList extends React.Component<Props> {
 
   getKustomizeObjectLink(name: string) {
     const selfLinkUrl = this.getDependantSelfLink(name);
-    return <Link to={getDetailsUrl(selfLinkUrl)}>{name}</Link>
+
+    return <Link to={getDetailsUrl(selfLinkUrl)}>{name}</Link>;
   }
 
   render() {
@@ -84,7 +81,7 @@ export class DependsOnList extends React.Component<Props> {
                   // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
                   <TableCell className="name">{this.getKustomizeObjectLink(dependent.name)}</TableCell>
-                  <TableCell className="namespace">{dependent?.namespace ?? ""}</TableCell>
+                  <TableCell className="namespace">{dependent?.namespace ?? kustomization.getNs}</TableCell>
                 </TableRow>
               );
             })

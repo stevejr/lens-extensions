@@ -1,15 +1,15 @@
 import { Renderer } from "@k8slens/extensions";
 
 export class Bucket extends Renderer.K8sApi.KubeObject {
-  static kind = "Bucket"
-  static namespaced = true
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/buckets"
+  static kind = "Bucket";
+  static namespaced = true;
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/buckets";
 
-  kind!: string
-  apiVersion!: string
+  kind!: string;
+  apiVersion!: string;
   metadata!: BucketMetadata; 
-  spec!: BucketSpec
-  status?: BucketStatus
+  spec!: BucketSpec;
+  status?: BucketStatus;
 }
 
 export type BucketMetadata = {
@@ -25,7 +25,7 @@ export type BucketMetadata = {
   annotations?: {
       [key: string]: string;
   };
-}
+};
 
 export type BucketSpec = {
   provider?: string;
@@ -35,12 +35,12 @@ export type BucketSpec = {
   region?: string;  
   secretRef?: {
     name: string;
-  }
+  };
   interval: string;
   timeout?: string;
   ignore?: string;
   suspend?: boolean;
-}
+};
 
 export type BucketStatus = {
   observedGeneration?: BigInt;
@@ -49,7 +49,7 @@ export type BucketStatus = {
   artifact?: Artifact;
   includedArtifacts?: Artifact[];
   ReconcileRequestStatus?: ReconcileRequestStatus;
-}
+};
 
 export type Condition = {
   type: string;
@@ -58,13 +58,13 @@ export type Condition = {
   lastTransitionTime: string;
   reason: string;
   message: string
-}
+};
 
 export type ConditionStatus = {
-  ConditionTrue?: 'True';
-  ConditionFalse?: 'False';
-  ConditionUnknown?: 'Unknown';
-}
+  ConditionTrue?: "True";
+  ConditionFalse?: "False";
+  ConditionUnknown?: "Unknown";
+};
 
 export type Artifact = {
   path: string;
@@ -72,8 +72,8 @@ export type Artifact = {
   revision: string;
   checksum: string;
   lastUpdateTime: string;
-}
+};
 
 export type ReconcileRequestStatus = {
   lastHandledReconcileAt: string;
-}
+};

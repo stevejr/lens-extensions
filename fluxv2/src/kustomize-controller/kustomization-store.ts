@@ -5,11 +5,11 @@ export class KustomizationApi extends Renderer.K8sApi.KubeApi<Kustomization> {
 }
 
 export const kustomizationApi = new KustomizationApi({
-    objectConstructor: Kustomization
+  objectConstructor: Kustomization
 });
 
 export class KustomizationStore extends Renderer.K8sApi.KubeObjectStore<Kustomization> {
-    api = kustomizationApi
+  api = kustomizationApi;
 }
 
 export const kustomizationStore = new KustomizationStore();

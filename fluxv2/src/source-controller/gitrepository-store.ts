@@ -5,11 +5,11 @@ export class GitRepositoryApi extends Renderer.K8sApi.KubeApi<GitRepository> {
 }
 
 export const gitRepositoryApi = new GitRepositoryApi({
-    objectConstructor: GitRepository
+  objectConstructor: GitRepository
 });
 
 export class GitRepositoryStore extends Renderer.K8sApi.KubeObjectStore<GitRepository> {
-    api = gitRepositoryApi
+  api = gitRepositoryApi;
 }
 
 export const gitRepositoryStore = new GitRepositoryStore();

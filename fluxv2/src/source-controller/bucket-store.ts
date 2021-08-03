@@ -5,11 +5,11 @@ export class BucketApi extends Renderer.K8sApi.KubeApi<Bucket> {
 }
 
 export const bucketApi = new BucketApi({
-    objectConstructor: Bucket
+  objectConstructor: Bucket
 });
 
 export class BucketStore extends Renderer.K8sApi.KubeObjectStore<Bucket> {
-    api = bucketApi
+  api = bucketApi;
 }
 
 export const bucketStore = new BucketStore();

@@ -5,11 +5,11 @@ export class HelmChartApi extends Renderer.K8sApi.KubeApi<HelmChart> {
 }
 
 export const helmChartApi = new HelmChartApi({
-    objectConstructor: HelmChart
+  objectConstructor: HelmChart
 });
 
 export class HelmChartStore extends Renderer.K8sApi.KubeObjectStore<HelmChart> {
-    api = helmChartApi
+  api = helmChartApi;
 }
 
 export const helmChartStore = new HelmChartStore();

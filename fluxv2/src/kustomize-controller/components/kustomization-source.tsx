@@ -1,12 +1,12 @@
 import "./kustomization-dependson-list.scss";
 
-import { Common, Renderer } from "@k8slens/extensions";
+import { Renderer } from "@k8slens/extensions";
 import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import type { Kustomization } from "../kustomization";
 import { bucketStore } from "../../source-controller/bucket-store";
-import { gitRepositoryStore } from "../../source-controller/gitrepository-store"
+import { gitRepositoryStore } from "../../source-controller/gitrepository-store";
 
 const {
   Component: {
@@ -18,7 +18,6 @@ const {
   },
   Navigation: {
     getDetailsUrl,
-    showDetails
   }
 } = Renderer;
 

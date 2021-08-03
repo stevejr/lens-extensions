@@ -1,18 +1,18 @@
 import { Renderer } from "@k8slens/extensions";
 
 export class Kustomization extends Renderer.K8sApi.KubeObject {
-  static kind = "Kustomization"
-  static namespaced = true
-  static apiBase = "/apis/kustomize.toolkit.fluxcd.io/v1beta1/kustomizations"
+  static kind = "Kustomization";
+  static namespaced = true;
+  static apiBase = "/apis/kustomize.toolkit.fluxcd.io/v1beta1/kustomizations";
 
-  kind!: string
-  apiVersion!: string
+  kind!: string;
+  apiVersion!: string;
   metadata!: KustomizationMetadata; 
-  spec!: KustomizationSpec
-  status?: KustomizationStatus
+  spec!: KustomizationSpec;
+  status?: KustomizationStatus;
 
   getDependsOn() {
-    return this.spec?.dependsOn ?? []
+    return this.spec?.dependsOn ?? [];
   }
 }
 
@@ -29,7 +29,7 @@ export type KustomizationMetadata = {
   annotations?: {
       [key: string]: string;
   };
-}
+};
 
 export type KustomizationSpec = {
   dependsOn?: CrossNamespaceDependencyReference[];
@@ -114,21 +114,21 @@ export type Selector = {
   namespace?: string;
   annotationSelector?: string;
   labelSelector?: string;
-}
+};
 
 export type Image = {
   name: string;
   newName?: string;
   newTag?: string;
   digest?: string;
-}
+};
 
 export type CrossNamespaceSourceReference = {
   apiVersion?: string;
   kind: string;
   name: string;
   namespace?: string;
-}
+};
 
 export type KustomizationStatus = {
   observedGeneration?: BigInt;
@@ -137,7 +137,7 @@ export type KustomizationStatus = {
   lastAttemptedRevision?: string;
   ReconcileRequestStatus?: ReconcileRequestStatus;
   snapshot?: Snapshot;
-}
+};
 
 export type Condition = {
   type: string;
@@ -146,14 +146,13 @@ export type Condition = {
   lastTransitionTime: string;
   reason: string;
   message: string
-
-}
+};
 
 export type ConditionStatus = {
-  ConditionTrue?: 'True';
-  ConditionFalse?: 'False';
-  ConditionUnknown?: 'Unknown';
-}
+  ConditionTrue?: "True";
+  ConditionFalse?: "False";
+  ConditionUnknown?: "Unknown";
+};
 
 export type Artifact = {
   path: string;
@@ -161,18 +160,18 @@ export type Artifact = {
   revision: string;
   checksum: string;
   lastUpdateTime: string;
-}
+};
 
 export type ReconcileRequestStatus = {
   lastHandledReconcileAt: string;
-}
+};
 
 export type Snapshot = {
   checksum: string;
   entries: SnapshotEntry[];
-}
+};
 
 export type SnapshotEntry = {
   namespace?: string;
   kinds: Map<string, string>;
-}
+};

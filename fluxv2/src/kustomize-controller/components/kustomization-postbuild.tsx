@@ -28,11 +28,11 @@ export class PostBuild extends React.Component<Props> {
 
     const { postBuild } = kustomization.spec;
 
-    if (!postBuild) return null;
+    if (!postBuild?.substitute) return null;
 
     return (
       <div className="PostBuild flex column">
-        <DrawerTitle title="Post Build"/>
+        <DrawerTitle title="Post Build - Substitutes"/>
         <Table
           selectable
           scrollable={false}

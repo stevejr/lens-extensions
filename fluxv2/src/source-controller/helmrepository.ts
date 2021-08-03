@@ -1,15 +1,15 @@
 import { Renderer } from "@k8slens/extensions";
 
 export class HelmRepository extends Renderer.K8sApi.KubeObject {
-  static kind = "HelmRepository"
-  static namespaced = true
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmrepositories"
+  static kind = "HelmRepository";
+  static namespaced = true;
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmrepositories";
 
-  kind!: string
-  apiVersion!: string
+  kind!: string;
+  apiVersion!: string;
   metadata!: HelmRepositoryMetadata; 
-  spec!: HelmRepositorySpec
-  status?: HelmRepositoryStatus
+  spec!: HelmRepositorySpec;
+  status?: HelmRepositoryStatus;
 }
 
 export type HelmRepositoryMetadata = {
@@ -25,7 +25,7 @@ export type HelmRepositoryMetadata = {
   annotations?: {
       [key: string]: string;
   };
-}
+};
 
 export type HelmRepositorySpec = {
   url: string;
@@ -36,7 +36,7 @@ export type HelmRepositorySpec = {
   interval: string;
   timeout?: string;
   suspend?: boolean;
-}
+};
 
 export type HelmRepositoryStatus = {
   observedGeneration?: BigInt;
@@ -45,7 +45,7 @@ export type HelmRepositoryStatus = {
   artifact?: Artifact;
   includedArtifacts?: Artifact[];
   ReconcileRequestStatus?: ReconcileRequestStatus;
-}
+};
 
 export type Condition = {
   type: string;
@@ -54,13 +54,13 @@ export type Condition = {
   lastTransitionTime: string;
   reason: string;
   message: string
-}
+};
 
 export type ConditionStatus = {
-  ConditionTrue?: 'True';
-  ConditionFalse?: 'False';
-  ConditionUnknown?: 'Unknown';
-}
+  ConditionTrue?: "True";
+  ConditionFalse?: "False";
+  ConditionUnknown?: "Unknown";
+};
 
 export type Artifact = {
   path: string;
@@ -68,8 +68,8 @@ export type Artifact = {
   revision: string;
   checksum: string;
   lastUpdateTime: string;
-}
+};
 
 export type ReconcileRequestStatus = {
   lastHandledReconcileAt: string;
-}
+};

@@ -5,11 +5,11 @@ export class HelmRepositoryApi extends Renderer.K8sApi.KubeApi<HelmRepository> {
 }
 
 export const helmRepositoryApi = new HelmRepositoryApi({
-    objectConstructor: HelmRepository
+  objectConstructor: HelmRepository
 });
 
 export class HelmRepositoryStore extends Renderer.K8sApi.KubeObjectStore<HelmRepository> {
-    api = helmRepositoryApi
+  api = helmRepositoryApi;
 }
 
 export const helmRepositoryStore = new HelmRepositoryStore();
