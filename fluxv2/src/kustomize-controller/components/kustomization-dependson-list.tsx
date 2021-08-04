@@ -36,14 +36,12 @@ export class DependsOnList extends React.Component<Props> {
     [sortBy.namespace]: (dependsOn: CrossNamespaceDependencyReference) => dependsOn?.namespace,
   };
 
-  getDependantSelfLink(name: string) {
-    return kustomizationStore.getByName(name).selfLink;
+  async componentDidMount() {
+    await kustomizationStore.loadAll();
   }
 
-  getKustomizeObjectLink(name: string) {
-    const selfLinkUrl = this.getDependantSelfLink(name);
-
-    return <Link to={getDetailsUrl(selfLinkUrl)}>{name}</Link>;
+  getDependant(name: string) {
+    return kustomizationStore.getByName(name);
   }
 
   render() {
@@ -73,6 +71,9 @@ export class DependsOnList extends React.Component<Props> {
           </TableHead>
           {
             dependsOn.map(dependent => {
+
+              const depSelfLink = this.getDependant(dependent.name).selfLink;
+              
               return (
                 <TableRow
                   key={dependent.name}
@@ -80,7 +81,7 @@ export class DependsOnList extends React.Component<Props> {
                   nowrap
                   // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
-                  <TableCell className="name">{this.getKustomizeObjectLink(dependent.name)}</TableCell>
+                  <TableCell className="name"><Link to={getDetailsUrl(depSelfLink)}>{dependent.name}</Link></TableCell>
                   <TableCell className="namespace">{dependent?.namespace ?? kustomization.getNs}</TableCell>
                 </TableRow>
               );

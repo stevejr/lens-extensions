@@ -36,6 +36,11 @@ export class KustomizationSource extends React.Component<Props> {
     [sortBy.kind]: (kustomization: Kustomization) => kustomization.spec?.sourceRef.kind,
     [sortBy.name]: (kustomization: Kustomization) => kustomization.spec?.sourceRef.name,
   };
+  
+  async componentDidMount() {
+    await bucketStore.loadAll();
+    await gitRepositoryStore.loadAll();
+  }
 
   getSourceRef(kind: string, name: string) {
     switch (kind) {

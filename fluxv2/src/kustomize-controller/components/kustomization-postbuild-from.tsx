@@ -43,6 +43,11 @@ export class PostBuildFrom extends React.Component<Props> {
     [sortBy.kind]: (sub: SubstituteReference) => sub.kind,
   };
 
+  async componentDidMount() {
+    await cmStore.loadAll();
+    await secretStore.loadAll();
+  }
+
   getSubstituteFrom(kind: string, name: string) {
     switch (kind) {
       case "ConfigMap":
