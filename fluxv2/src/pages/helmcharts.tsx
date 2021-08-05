@@ -95,11 +95,6 @@ export class HelmChartsPage extends React.Component<{ extension: Renderer.LensEx
           this.getSource(helmChart),
           helmChart.spec?.version ?? ""
         ]}
-        // tableProps={{
-        //   customRowHeights: (item: HelmChart, lineHeight, paddings) => {
-        //     return 2 * lineHeight + paddings;
-        //   }
-        // }}
       />
     );
   }
