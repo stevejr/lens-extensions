@@ -1,7 +1,11 @@
-import { Renderer } from "@k8slens/extensions";
+import { Common, Renderer } from "@k8slens/extensions";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Kustomization } from "../kustomize-controller/kustomization";
 import { kustomizationStore } from "../kustomize-controller/kustomization-store";
+import { bucketStore } from "../source-controller/bucket-store";
+import { gitRepositoryStore } from "../source-controller/gitrepository-store";
+
 
 const enum sortBy {
   name = "name",
@@ -12,12 +16,53 @@ const enum sortBy {
 
 }
 
+const {
+  Component: {
+    Badge,
+  },
+  Navigation: {
+    getDetailsUrl
+  }
+} = Renderer;
+
+const { stopPropagation } = Common.Util;
+
 export class KustomizationPage extends React.Component<{ extension: Renderer.LensExtension }> {
   getKustomizationSource(kustomization: Kustomization) {
     return <>Kind: {kustomization.spec.sourceRef.kind}<br />Name: {kustomization.spec.sourceRef.name}</>;
   }
 
-  render() {
+  async componentDidMount() {
+    await bucketStore.loadAll();
+    await gitRepositoryStore.loadAll();
+  }
+
+  getSourceRefLink(kustomization: Kustomization) {
+    const { kind, name } = kustomization.spec.sourceRef;
+
+    switch (kind) {
+      case "Bucket":
+        const bucket = bucketStore.getByName(name);
+
+        return bucket.selfLink;
+      case "GitRepository":
+        const gitRepo = gitRepositoryStore.getByName(name);
+
+        return gitRepo.selfLink;
+    } 
+  }
+
+  getSource(kustomization: Kustomization) {
+    const selfLink = this.getSourceRefLink(kustomization);
+
+    return <><Badge flat key={kustomization.spec.sourceRef.kind} className="sourceRef" tooltip={kustomization.spec.sourceRef.name} expandable={false} onClick={stopPropagation}>
+      <Link to={getDetailsUrl(selfLink)}>
+        {kustomization.spec.sourceRef.kind}
+      </Link>
+    </Badge></>;
+  }
+
+  render() {    
     return (
       <Renderer.Component.KubeObjectListLayout 
         tableId="kustomizationTable"
@@ -41,16 +86,11 @@ export class KustomizationPage extends React.Component<{ extension: Renderer.Len
         renderTableContents={(kustomization: Kustomization) => [
           kustomization.getName(),
           kustomization.metadata.namespace,
-          this.getKustomizationSource(kustomization),
+          this.getSource(kustomization),
           kustomization.spec?.path ?? "",
           kustomization.status.conditions[0].status,
           kustomization.status.conditions[0].message
         ]}
-        tableProps={{
-          customRowHeights: (item: Kustomization, lineHeight, paddings) => {
-            return 2 * lineHeight + paddings;
-          }
-        }}
       />
     );
   }
