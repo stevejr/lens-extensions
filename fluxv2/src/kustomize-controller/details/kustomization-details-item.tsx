@@ -45,6 +45,9 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
         <Renderer.Component.DrawerItem name="Force">
           {kustomization.spec?.force ? "true" : "false"}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Decryption Provider">
+          {kustomization.spec?.decryption?.provider ?? ""}
+        </Renderer.Component.DrawerItem>
         <KustomizationSource kustomization={kustomization}/>
         <DependsOnList kustomization={kustomization}/>
         <PostBuild kustomization={kustomization}/>

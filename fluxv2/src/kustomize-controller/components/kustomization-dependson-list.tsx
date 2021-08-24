@@ -82,7 +82,7 @@ export class DependsOnList extends React.Component<Props> {
                   // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
                   <TableCell className="name"><Link to={getDetailsUrl(depSelfLink)}>{dependent.name}</Link></TableCell>
-                  <TableCell className="namespace">{dependent?.namespace ?? kustomization.getNs}</TableCell>
+                  <TableCell className="namespace">{dependent?.namespace ?? kustomization.metadata.namespace}</TableCell>
                 </TableRow>
               );
             })
