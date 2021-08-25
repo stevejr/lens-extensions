@@ -22,6 +22,9 @@ const {
 const secretStore: Renderer.K8sApi.KubeObjectStore<Secret> =
   Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
 
+interface Props {
+  gitrepository: GitRepository;
+}
 @observer
 export class GitRepositoryDetailsItem extends React.Component<Renderer.Component.KubeObjectDetailsProps<GitRepository>> {
 
@@ -29,16 +32,19 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
     await secretStore.loadAll();
   }
 
+  getSecretRef(repo: GitRepository) {
+    const secretRef = secretStore.getByName(repo.spec?.secretRef?.name);
+    if (secretRef) {
+      return <Link to={getDetailsUrl(secretRef.metadata.selfLink)}>{repo.spec?.secretRef?.name}</Link>
+    }
+    return ""
+  }
+
   render() {
     const { object: gitrepository } = this.props;
 
     if (!gitrepository) {
       return null;
-    }
-
-    const secretRef = secretStore.getByName(gitrepository.spec?.secretRef?.name);
-    if (secretRef) {
-      console.log(`secretRef selfLink: ${secretRef?.metadata?.selfLink}`);
     }
 
     return (
@@ -57,7 +63,7 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
           {gitrepository.spec?.interval}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Secret Ref">
-          <Link to={getDetailsUrl(secretRef.metadata.selfLink)}>{gitrepository.spec?.secretRef?.name}</Link>
+          {this.getSecretRef(gitrepository)}
         </Renderer.Component.DrawerItem>
         {/* <DependsOnList kustomization={kustomization}/>
         <PostBuild kustomization={kustomization}/>
