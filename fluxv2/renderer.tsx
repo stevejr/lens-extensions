@@ -9,6 +9,8 @@ import { Kustomization } from "./src/kustomize-controller/kustomization";
 import { KustomizationDetailsItem } from "./src/kustomize-controller/details/kustomization-details-item";
 import { GitRepositoryDetailsItem } from "./src/source-controller/details/gitrepository-details-item";
 import { GitRepository } from "./src/source-controller/gitrepository";
+import { HelmChart } from "./src/source-controller/helmchart";
+import { HelmChartDetailsItem } from "./src/source-controller/details/helmchart-details-item";
 
 const enum id {
   bucket = "bucket",
@@ -110,19 +112,27 @@ export default class FluxV2Extension extends Renderer.LensExtension {
 
     kubeObjectDetailItems = [
       {
-        kind: "Kustomization",
-        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
-        priority: 10,
-        components: {
-          Details: (props: Renderer.Component.KubeObjectDetailsProps<Kustomization>) => <KustomizationDetailsItem {...props} />
-        }
-      },
-      {
         kind: "GitRepository",
         apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<GitRepository>) => <GitRepositoryDetailsItem {...props} />
+        }
+      },
+      {
+        kind: "HelmChart",
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        priority: 10,
+        components: {
+          Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmChart>) => <HelmChartDetailsItem {...props} />
+        }
+      },
+      {
+        kind: "Kustomization",
+        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
+        priority: 10,
+        components: {
+          Details: (props: Renderer.Component.KubeObjectDetailsProps<Kustomization>) => <KustomizationDetailsItem {...props} />
         }
       }
     ];
