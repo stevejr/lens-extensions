@@ -2,10 +2,10 @@ import { Renderer } from "@k8slens/extensions";
 import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
-import type { HelmChart } from "../helmchart";
-import { bucketStore } from "../bucket-store";
-import { gitRepositoryStore } from "../gitrepository-store";
-import { helmRepositoryStore } from "../helmrepository-store";
+import type { HelmRelease } from "../helmrelease";
+import { bucketStore } from "../../source-controller/bucket-store";
+import { gitRepositoryStore } from "../../source-controller/gitrepository-store";
+import { helmRepositoryStore } from "../../source-controller/helmrepository-store";
 
 const {
   Component: {
@@ -26,14 +26,14 @@ enum sortBy {
 }
 
 interface Props {
-  helmChart: HelmChart;
+  helmRelease: HelmRelease;
 }
 
 @observer
-export class HelmChartSource extends React.Component<Props> {
+export class HelmReleaseSource extends React.Component<Props> {
   sortingCallbacks = {
-    [sortBy.kind]: (helmChart: HelmChart) => helmChart.spec?.sourceRef.kind,
-    [sortBy.name]: (helmChart: HelmChart) => helmChart.spec?.sourceRef.name,
+    [sortBy.kind]: (helmRelease: HelmRelease) => helmRelease.spec?.chart?.spec?.sourceRef.kind,
+    [sortBy.name]: (helmRelease: HelmRelease) => helmRelease.spec?.chart?.spec?.sourceRef.name,
   };
   
   async componentDidMount() {
@@ -54,11 +54,11 @@ export class HelmChartSource extends React.Component<Props> {
   }
 
   render() {
-    const { helmChart } = this.props;
+    const { helmRelease } = this.props;
 
-    if (!helmChart) return null;
+    if (!helmRelease) return null;
 
-    const sourceRef = this.getSourceRef(helmChart.spec?.sourceRef.kind, helmChart.spec?.sourceRef.name);
+    const sourceRef = this.getSourceRef(helmRelease.spec?.chart?.spec?.sourceRef.kind, helmRelease.spec?.chart?.spec?.sourceRef.name);
 
     if (!sourceRef) return null;
 
@@ -85,12 +85,12 @@ export class HelmChartSource extends React.Component<Props> {
           {
             <TableRow
               key={sourceRef.getName()}
-              sortItem={helmChart}
+              sortItem={helmRelease}
               nowrap
             >
               <TableCell className="name"><Link to={getDetailsUrl(sourceRef.selfLink)}>{sourceRef.metadata.name}</Link></TableCell>
               <TableCell className="kind">{sourceRef.kind}</TableCell>
-              <TableCell className="chart">{helmChart.spec?.chart ?? "."}</TableCell>
+              <TableCell className="chart">{helmRelease.spec?.chart?.spec?.chart ?? "."}</TableCell>
               <TableCell className="revision">{sourceRef.status?.artifact?.revision}</TableCell>
               <TableCell className="ready">{sourceRef.status.conditions[0].status}</TableCell>
               <TableCell className="lastUpdated">{sourceRef.status?.artifact?.lastUpdateTime}</TableCell>

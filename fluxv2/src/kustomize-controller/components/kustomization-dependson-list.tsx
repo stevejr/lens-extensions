@@ -68,12 +68,13 @@ export class DependsOnList extends React.Component<Props> {
           <TableHead>
             <TableCell className="name" sortBy={sortBy.name}>Name</TableCell>
             <TableCell className="namespace" sortBy={sortBy.namespace}>Namespace</TableCell>
+            <TableCell className="ready">Ready</TableCell>
           </TableHead>
           {
             dependsOn.map(dependent => {
 
-              const depSelfLink = this.getDependant(dependent.name).selfLink;
-              
+              const depObject = this.getDependant(dependent.name);
+
               return (
                 <TableRow
                   key={dependent.name}
@@ -81,8 +82,9 @@ export class DependsOnList extends React.Component<Props> {
                   nowrap
                   // onClick={ prevDefault(() => showDetails(this.getDependantSelfLink(dependent.name), false))}
                 >
-                  <TableCell className="name"><Link to={getDetailsUrl(depSelfLink)}>{dependent.name}</Link></TableCell>
+                  <TableCell className="name"><Link to={getDetailsUrl(depObject.selfLink)}>{dependent.name}</Link></TableCell>
                   <TableCell className="namespace">{dependent?.namespace ?? kustomization.metadata.namespace}</TableCell>
+                  <TableCell className="ready">{depObject.status.conditions[0].status}</TableCell>
                 </TableRow>
               );
             })

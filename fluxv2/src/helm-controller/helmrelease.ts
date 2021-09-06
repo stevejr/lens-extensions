@@ -1,5 +1,4 @@
 import { Renderer } from "@k8slens/extensions";
-import { InstalledExtension } from "@k8slens/extensions/dist/src/extensions/extension-discovery";
 
 export class HelmRelease extends Renderer.K8sApi.KubeObject {
   static kind = "HelmRelease";
@@ -216,8 +215,8 @@ export type ValuesReference = {
   valuesKey?: string;
   targetPath?: string;
   optional?: boolean;
-}
+};
 
 export type KubeConfig = {
   secretRef: string;
-}
+};

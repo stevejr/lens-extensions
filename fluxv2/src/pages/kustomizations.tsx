@@ -27,7 +27,7 @@ const {
 
 const { stopPropagation } = Common.Util;
 
-export class KustomizationPage extends React.Component<{ extension: Renderer.LensExtension }> {
+export class KustomizationsPage extends React.Component<{ extension: Renderer.LensExtension }> {
   getKustomizationSource(kustomization: Kustomization) {
     return <>Kind: {kustomization.spec.sourceRef.kind}<br />Name: {kustomization.spec.sourceRef.name}</>;
   }

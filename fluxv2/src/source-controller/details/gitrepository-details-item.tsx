@@ -3,12 +3,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Secret } from "@k8slens/extensions/dist/src/renderer/api/endpoints";
 import { Link } from "react-router-dom";
-import { Kustomization } from "../../kustomize-controller/kustomization";
 import { GitRepository } from "../gitrepository";
-// import { DependsOnList } from "../components/kustomization-dependson-list";
-// import { KustomizationSource } from "../components/kustomization-source";
-// import { PostBuild } from "../components/kustomization-postbuild";
-// import { PostBuildFrom } from "../components/kustomization-postbuild-from";
 
 const {
   Component: {
@@ -34,10 +29,12 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
 
   getSecretRef(repo: GitRepository) {
     const secretRef = secretStore.getByName(repo.spec?.secretRef?.name);
+
     if (secretRef) {
-      return <Link to={getDetailsUrl(secretRef.metadata.selfLink)}>{repo.spec?.secretRef?.name}</Link>
+      return <Link to={getDetailsUrl(secretRef.metadata.selfLink)}>{repo.spec?.secretRef?.name}</Link>;
     }
-    return ""
+
+    return "";
   }
 
   render() {

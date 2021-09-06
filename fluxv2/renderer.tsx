@@ -4,13 +4,16 @@ import { GitRepositoriesPage } from "./src/pages/gitrepositories";
 import { HelmChartsPage } from "./src/pages/helmcharts";
 import { BucketsPage } from "./src/pages/buckets";
 import { HelmRepositoriesPage } from "./src/pages/helmrepositories";
-import { KustomizationPage } from "./src/pages/kustomizations";
+import { KustomizationsPage } from "./src/pages/kustomizations";
 import { Kustomization } from "./src/kustomize-controller/kustomization";
 import { KustomizationDetailsItem } from "./src/kustomize-controller/details/kustomization-details-item";
 import { GitRepositoryDetailsItem } from "./src/source-controller/details/gitrepository-details-item";
 import { GitRepository } from "./src/source-controller/gitrepository";
 import { HelmChart } from "./src/source-controller/helmchart";
 import { HelmChartDetailsItem } from "./src/source-controller/details/helmchart-details-item";
+import { HelmReleasesPage } from "./src/pages/helmreleases";
+import { HelmRelease } from "./src/helm-controller/helmrelease";
+import { HelmReleaseDetailsItem } from "./src/helm-controller/details/helmrelease-details-item";
 
 const enum id {
   bucket = "bucket",
@@ -18,7 +21,8 @@ const enum id {
   helmChart = "helmchart",
   helmRepository = "helmrepository",
   sources = "sources",
-  kustomize = "kustomize"
+  kustomize = "kustomize",
+  helmRelease = "helmrelease"
 }
 
 export function DashboardIcon(props: Renderer.Component.IconProps) {
@@ -47,6 +51,12 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.helmRelease,
+        components: {
+          Page: () => <HelmReleasesPage extension={this}/>,
+        }
+      },
+      {
         id: id.helmRepository,
         components: {
           Page: () => <HelmRepositoriesPage extension={this}/>,
@@ -55,9 +65,9 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       {
         id: id.kustomize,
         components: {
-          Page: () => <KustomizationPage extension={this}/>,
+          Page: () => <KustomizationsPage extension={this}/>,
         }
-      },
+      }
     ];
 
     clusterPageMenus = [
@@ -88,6 +98,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         parentId: "flux",
         target: {pageId: id.helmChart},
         title: "HelmChart Sources",
+        components: {
+          Icon: DashboardIcon
+        }
+      },
+      {
+        parentId: "flux",
+        target: {pageId: id.helmRelease},
+        title: "HelmReleases",
         components: {
           Icon: DashboardIcon
         }
@@ -125,6 +143,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmChart>) => <HelmChartDetailsItem {...props} />
+        }
+      },
+      {
+        kind: "HelmRelease",
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
+        priority: 10,
+        components: {
+          Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmRelease>) => <HelmReleaseDetailsItem {...props} />
         }
       },
       {
