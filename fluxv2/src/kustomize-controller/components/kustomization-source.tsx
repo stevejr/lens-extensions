@@ -90,7 +90,7 @@ export class KustomizationSource extends React.Component<Props> {
               <TableCell className="kind">{sourceRef.kind}</TableCell>
               <TableCell className="path">{kustomization.spec?.path ?? "."}</TableCell>
               <TableCell className="revision">{sourceRef.status?.artifact?.revision}</TableCell>
-              <TableCell className="revision">{sourceRef.status.conditions[0].status}</TableCell>
+              <TableCell className="ready">{sourceRef.status.conditions[0].status}</TableCell>
               <TableCell className="lastUpdated">{sourceRef.status?.artifact?.lastUpdateTime}</TableCell>
             </TableRow>
           }
