@@ -1,5 +1,6 @@
 import { Renderer } from "@k8slens/extensions";
 import React from "react";
+import { Link } from "react-router-dom";
 import { HelmRepository } from "../source-controller/helmrepository";
 import { helmRepositoryStore } from "../source-controller/helmrepository-store";
 
@@ -36,6 +37,7 @@ export class HelmRepositoriesPage extends React.Component<{ extension: Renderer.
           helmRepository.getName(),
           helmRepository.metadata.namespace,
           helmRepository.spec.url,
+          // <Link to={helmRepository.spec.url}>{helmRepository.spec.url}</Link>, - how to open in a browser?
           helmRepository.status.conditions[0].status,
           helmRepository.status.conditions[0].message
         ]}
