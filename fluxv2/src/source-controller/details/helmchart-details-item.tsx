@@ -30,7 +30,7 @@ export class HelmChartDetailsItem extends React.Component<Renderer.Component.Kub
           {ready}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Latest Condition Message">
-          {helmChart.status?.conditions[0].message}
+          {helmChart.status?.conditions[0]?.message ?? ""}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {helmChart.status.artifact.revision}
