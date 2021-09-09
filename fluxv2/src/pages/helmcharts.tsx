@@ -70,6 +70,12 @@ export class HelmChartsPage extends React.Component<{ extension: Renderer.LensEx
     </Badge></>;
   }
 
+  checkSuspended(helmChart: HelmChart) {
+    const ready = helmChart.spec?.suspend ? "Suspended" : helmChart.status.conditions[0].status;
+
+    return ready;
+  }
+
   render() {
     return (
       <Renderer.Component.KubeObjectListLayout 
@@ -89,13 +95,15 @@ export class HelmChartsPage extends React.Component<{ extension: Renderer.LensEx
           {title: "Source", className: "source"},
           {title: "Ready", className: "ready"},
           {title: "Version", className: "version"},
+          {title: "Revision", className: "revision"},
         ]}
         renderTableContents={(helmChart: HelmChart) => [
           helmChart.getName(),
           helmChart.metadata.namespace,
           this.getSource(helmChart),
-          helmChart.status.conditions[0].status,
-          helmChart.spec?.version ?? ""
+          this.checkSuspended(helmChart),
+          helmChart.spec?.version ?? "",
+          helmChart.status.artifact.revision ?? ""
         ]}
       />
     );

@@ -21,11 +21,13 @@ export class HelmChartDetailsItem extends React.Component<Renderer.Component.Kub
       return null;
     }
 
+    const ready = helmChart.spec?.suspend ? "Suspended" : helmChart.status.conditions[0].status;
+
     return (
       <div className="HelmChartDetailsItem">
         <KubeObjectMeta object={helmChart} />
         <Renderer.Component.DrawerItem name="Ready">
-          {helmChart.status.conditions[0].status}
+          {ready}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {helmChart.status.artifact.revision}

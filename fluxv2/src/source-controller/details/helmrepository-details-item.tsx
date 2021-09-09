@@ -3,7 +3,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Secret } from "@k8slens/extensions/dist/src/renderer/api/endpoints";
 import { Link } from "react-router-dom";
-import { GitRepository } from "../gitrepository";
+import { HelmRepository } from "../helmrepository";
 
 const {
   Component: {
@@ -18,17 +18,17 @@ const secretStore: Renderer.K8sApi.KubeObjectStore<Secret> =
   Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
 
 interface Props {
-  gitRepository: GitRepository;
+  helmRepository: HelmRepository;
 }
 
 @observer
-export class GitRepositoryDetailsItem extends React.Component<Renderer.Component.KubeObjectDetailsProps<GitRepository>> {
+export class HelmRepositoryDetailsItem extends React.Component<Renderer.Component.KubeObjectDetailsProps<HelmRepository>> {
 
   async componentDidMount() {
     await secretStore.loadAll();
   }
 
-  getSecretRef(repo: GitRepository) {
+  getSecretRef(repo: HelmRepository) {
     const secretRef = secretStore.getByName(repo.spec?.secretRef?.name);
 
     if (secretRef) {
@@ -39,35 +39,29 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
   }
 
   render() {
-    const { object: gitRepository } = this.props;
+    const { object: helmRepository } = this.props;
 
-    if (!gitRepository) {
+    if (!helmRepository) {
       return null;
     }
 
-    const ready = gitRepository.spec?.suspend ? "Suspended" : gitRepository.status.conditions[0].status;
+    const ready = helmRepository.spec?.suspend ? "Suspended" : helmRepository.status.conditions[0].status;
 
     return (
-      <div className="GitRepositoryDetailsItem">
-        <KubeObjectMeta object={gitRepository} />
+      <div className="HelmRepositoryDetailsItem">
+        <KubeObjectMeta object={helmRepository} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
-          {gitRepository.status.conditions[0].message}
+          {helmRepository.status.conditions[0].message}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="URL">
-          {gitRepository.spec?.url ?? ""}
+          {helmRepository.spec?.url ?? ""}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Interval">
-          {gitRepository.spec?.interval}
+          {helmRepository.spec?.interval}
         </Renderer.Component.DrawerItem>
-        <Renderer.Component.DrawerItem name="Secret Ref">
-          {this.getSecretRef(gitRepository)}
-        </Renderer.Component.DrawerItem>
-        {/* <DependsOnList kustomization={kustomization}/>
-        <PostBuild kustomization={kustomization}/>
-        <PostBuildFrom kustomization={kustomization}/> */}
       </div>
     );
   }

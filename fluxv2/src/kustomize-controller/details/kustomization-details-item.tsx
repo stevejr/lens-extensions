@@ -24,11 +24,13 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
       return null;
     }
 
+    const ready = kustomization.spec?.suspend ? "Suspended" : kustomization.status.conditions[0].status;
+
     return (
       <div className="KustomizationDetailsItem">
         <KubeObjectMeta object={kustomization} />
         <Renderer.Component.DrawerItem name="Ready">
-          {kustomization.status.conditions[0].status}
+          {ready}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {kustomization.status.lastAppliedRevision}

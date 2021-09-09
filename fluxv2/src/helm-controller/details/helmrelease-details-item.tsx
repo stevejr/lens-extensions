@@ -23,11 +23,13 @@ export class HelmReleaseDetailsItem extends React.Component<Renderer.Component.K
       return null;
     }
 
+    const ready = helmRelease.spec?.suspend ? "Suspended" : helmRelease.status.conditions[0].status;
+
     return (
       <div className="HelmReleaseDetailsItem">
         <KubeObjectMeta object={helmRelease} />
         <Renderer.Component.DrawerItem name="Ready">
-          {helmRelease.status.conditions[0].status}
+          {ready}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Release Name">
           {helmRelease.spec?.releaseName ?? ""}

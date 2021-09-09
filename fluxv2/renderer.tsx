@@ -14,6 +14,8 @@ import { HelmChartDetailsItem } from "./src/source-controller/details/helmchart-
 import { HelmReleasesPage } from "./src/pages/helmreleases";
 import { HelmRelease } from "./src/helm-controller/helmrelease";
 import { HelmReleaseDetailsItem } from "./src/helm-controller/details/helmrelease-details-item";
+import { HelmRepository } from "./src/source-controller/helmrepository";
+import { HelmRepositoryDetailsItem } from "./src/source-controller/details/helmrepository-details-item";
 
 const enum id {
   bucket = "bucket",
@@ -151,6 +153,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmRelease>) => <HelmReleaseDetailsItem {...props} />
+        }
+      },
+      {
+        kind: "HelmRepository",
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        priority: 10,
+        components: {
+          Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmRepository>) => <HelmRepositoryDetailsItem {...props} />
         }
       },
       {

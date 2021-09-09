@@ -13,6 +13,12 @@ const enum sortBy {
 }
 
 export class BucketsPage extends React.Component<{ extension: Renderer.LensExtension }> {
+  checkSuspended(bucket: Bucket) {
+    const ready = bucket.spec?.suspend ? "Suspended" : bucket.status.conditions[0].status;
+
+    return ready;
+  }
+
   render() {
     return (
       <Renderer.Component.KubeObjectListLayout 
@@ -32,6 +38,7 @@ export class BucketsPage extends React.Component<{ extension: Renderer.LensExten
           {title: "Bucket Name", className: "bucketName"},
           {title: "Bucket Endpoint", className: "bucketEndpoint"},
           {title: "Bucket Region", className: "bucketRegion"},
+          {title: "Ready", className: "ready"},
 
         ]}
         renderTableContents={(bucket: Bucket) => [
@@ -39,7 +46,8 @@ export class BucketsPage extends React.Component<{ extension: Renderer.LensExten
           bucket.metadata.namespace,
           bucket.spec.bucketName,
           bucket.spec.endpoint,
-          bucket.spec?.region ?? ""
+          bucket.spec?.region ?? "",
+          this.checkSuspended(bucket)
         ]}
       />
     );

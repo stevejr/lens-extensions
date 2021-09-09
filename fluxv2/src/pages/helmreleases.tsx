@@ -67,7 +67,13 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
     </Badge></>;
   }
 
-  render() {
+  checkSuspended(helmRelease: HelmRelease) {
+    const ready = helmRelease.spec?.suspend ? "Suspended" : helmRelease.status.conditions[0].status;
+
+    return ready;
+  }
+
+  render() {    
     return (
       <Renderer.Component.KubeObjectListLayout 
         tableId="helmReleaseTable"
@@ -86,13 +92,15 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
           {title: "Source", className: "source"},
           {title: "Ready", className: "ready"},
           {title: "Version", className: "version"},
+          {title: "Last Applied Revision", className: "lastAppliedRevision"},
         ]}
         renderTableContents={(helmRelease: HelmRelease) => [
           helmRelease.getName(),
           helmRelease.metadata.namespace,
           this.getSource(helmRelease),
-          helmRelease.status.conditions[0].status,
-          helmRelease.spec?.chart?.spec?.version ?? ""
+          this.checkSuspended(helmRelease),
+          helmRelease.spec?.chart?.spec?.version ?? "",
+          helmRelease.status?.lastAppliedRevision ?? ""
         ]}
       />
     );

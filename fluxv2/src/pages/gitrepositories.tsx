@@ -28,6 +28,12 @@ export class GitRepositoriesPage extends React.Component<{ extension: Renderer.L
       return gitRepository.spec.ref.commit;
     }
   }
+
+  checkSuspended(gitRepository: GitRepository) {
+    const ready = gitRepository.spec?.suspend ? "Suspended" : gitRepository.status.conditions[0].status;
+
+    return ready;
+  }
   
   render() {
     return (
@@ -56,8 +62,8 @@ export class GitRepositoriesPage extends React.Component<{ extension: Renderer.L
           gitRepository.metadata.namespace,
           gitRepository.spec.url,
           this.getGitRef(gitRepository),
-          gitRepository.status.conditions[0].status,
-          gitRepository.status.conditions[0].message
+          this.checkSuspended(gitRepository),
+          gitRepository.status?.artifact?.revision ?? ""
         ]}
       />
     );

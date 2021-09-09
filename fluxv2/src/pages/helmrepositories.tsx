@@ -1,6 +1,5 @@
 import { Renderer } from "@k8slens/extensions";
 import React from "react";
-import { Link } from "react-router-dom";
 import { HelmRepository } from "../source-controller/helmrepository";
 import { helmRepositoryStore } from "../source-controller/helmrepository-store";
 
@@ -12,6 +11,12 @@ const enum sortBy {
 }
 
 export class HelmRepositoriesPage extends React.Component<{ extension: Renderer.LensExtension }> {
+  checkSuspended(helmRepository: HelmRepository) {
+    const ready = helmRepository.spec?.suspend ? "Suspended" : helmRepository.status.conditions[0].status;
+
+    return ready;
+  }
+
   render() {
     return (
       <Renderer.Component.KubeObjectListLayout 
@@ -38,8 +43,8 @@ export class HelmRepositoriesPage extends React.Component<{ extension: Renderer.
           helmRepository.metadata.namespace,
           helmRepository.spec.url,
           // <Link to={helmRepository.spec.url}>{helmRepository.spec.url}</Link>, - how to open in a browser?
-          helmRepository.status.conditions[0].status,
-          helmRepository.status.conditions[0].message
+          this.checkSuspended(helmRepository),
+          helmRepository.status?.artifact?.revision ?? ""
         ]}
       />
     );

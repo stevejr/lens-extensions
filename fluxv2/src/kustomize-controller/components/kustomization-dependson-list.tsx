@@ -74,6 +74,7 @@ export class DependsOnList extends React.Component<Props> {
             dependsOn.map(dependent => {
 
               const depObject = this.getDependant(dependent.name);
+              const dependsOnReady = depObject.spec?.suspend ? "Suspended" : depObject.status.conditions[0].status;
 
               return (
                 <TableRow
@@ -84,7 +85,7 @@ export class DependsOnList extends React.Component<Props> {
                 >
                   <TableCell className="name"><Link to={getDetailsUrl(depObject.selfLink)}>{dependent.name}</Link></TableCell>
                   <TableCell className="namespace">{dependent?.namespace ?? kustomization.metadata.namespace}</TableCell>
-                  <TableCell className="ready">{depObject.status.conditions[0].status}</TableCell>
+                  <TableCell className="ready">{dependsOnReady}</TableCell>
                 </TableRow>
               );
             })

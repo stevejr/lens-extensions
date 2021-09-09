@@ -62,6 +62,8 @@ export class HelmReleaseSource extends React.Component<Props> {
 
     if (!sourceRef) return null;
 
+    const sourceRefReady = sourceRef.spec?.suspend ? "Suspended" : sourceRef.status.conditions[0].status;
+
     return (
       <div className="SourceRef flex column">
         <DrawerTitle title="Source Ref"/>
@@ -92,7 +94,7 @@ export class HelmReleaseSource extends React.Component<Props> {
               <TableCell className="kind">{sourceRef.kind}</TableCell>
               <TableCell className="chart">{helmRelease.spec?.chart?.spec?.chart ?? "."}</TableCell>
               <TableCell className="revision">{sourceRef.status?.artifact?.revision}</TableCell>
-              <TableCell className="ready">{sourceRef.status.conditions[0].status}</TableCell>
+              <TableCell className="ready">{sourceRefReady}</TableCell>
               <TableCell className="lastUpdated">{sourceRef.status?.artifact?.lastUpdateTime}</TableCell>
             </TableRow>
           }
