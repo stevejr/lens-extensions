@@ -53,6 +53,9 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {gitRepository.status?.conditions[0].message}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {gitRepository.status.conditions[0].message}
         </Renderer.Component.DrawerItem>

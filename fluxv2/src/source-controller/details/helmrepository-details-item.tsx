@@ -53,6 +53,9 @@ export class HelmRepositoryDetailsItem extends React.Component<Renderer.Componen
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {helmRepository.status?.conditions[0].message}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {helmRepository.status.conditions[0].message}
         </Renderer.Component.DrawerItem>

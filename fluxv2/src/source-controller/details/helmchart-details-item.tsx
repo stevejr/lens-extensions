@@ -29,6 +29,9 @@ export class HelmChartDetailsItem extends React.Component<Renderer.Component.Kub
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {helmChart.status?.conditions[0].message}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {helmChart.status.artifact.revision}
         </Renderer.Component.DrawerItem>

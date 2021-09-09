@@ -32,6 +32,9 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {kustomization.status?.conditions[0].message}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Last Applied Revision">
           {kustomization.status.lastAppliedRevision}
         </Renderer.Component.DrawerItem>

@@ -31,6 +31,9 @@ export class HelmReleaseDetailsItem extends React.Component<Renderer.Component.K
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {helmRelease.status?.conditions[0].message}
+        </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="Release Name">
           {helmRelease.spec?.releaseName ?? ""}
         </Renderer.Component.DrawerItem>
