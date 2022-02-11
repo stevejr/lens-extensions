@@ -5,8 +5,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 import type { Kustomization } from "../kustomization";
-import { bucketStore } from "../../source-controller/bucket-store";
-import { gitRepositoryStore } from "../../source-controller/gitrepository-store";
+// import { bucketStore } from "../../source-controller/bucket-store";
+// import { gitRepositoryStore } from "../../source-controller/gitrepository-store";
+import { KubeObject } from "@k8slens/extensions/dist/src/renderer/api/kube-object";
 
 const {
   Component: {
@@ -37,26 +38,17 @@ export class KustomizationSource extends React.Component<Props> {
     [sortBy.name]: (kustomization: Kustomization) => kustomization.spec?.sourceRef.name,
   };
   
-  async componentDidMount() {
-    await bucketStore.loadAll();
-    await gitRepositoryStore.loadAll();
-  }
-
-  getSourceRef(kind: string, name: string) {
-    switch (kind) {
-      case "Bucket":
-        return bucketStore.getByName(name);
-      case "GitRepository":
-        return gitRepositoryStore.getByName(name);
-    } 
-  }
+  // async componentDidMount() {
+  //   await bucketStore.loadAll();
+  //   await gitRepositoryStore.loadAll();
+  // }
 
   render() {
     const { kustomization } = this.props;
 
     if (!kustomization) return null;
 
-    const sourceRef = this.getSourceRef(kustomization.spec?.sourceRef.kind, kustomization.spec?.sourceRef.name);
+    const sourceRef = kustomization.getSourceRef(kustomization.spec?.sourceRef.name, kustomization.spec?.sourceRef.kind);
 
     if (!sourceRef) return null;
 

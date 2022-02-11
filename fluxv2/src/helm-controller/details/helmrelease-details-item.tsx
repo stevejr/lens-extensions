@@ -2,6 +2,7 @@ import { Renderer } from "@k8slens/extensions";
 import React from "react";
 import { observer } from "mobx-react";
 import { HelmRelease } from "../helmrelease";
+import { HelmReleaseKustomization } from "../components/helmrelease-kustomization";
 import { HelmReleaseSource } from "../components/helmrelease-source";
 import { HelmReleaseValues } from "../components/helmrelease-values";
 import { HelmReleasePostRenderer } from "../components/helmrelease-postrenderer";
@@ -49,6 +50,7 @@ export class HelmReleaseDetailsItem extends React.Component<Renderer.Component.K
         <Renderer.Component.DrawerItem name="Interval">
           {helmRelease.spec?.interval}
         </Renderer.Component.DrawerItem>
+        <HelmReleaseKustomization helmRelease={helmRelease}/>
         <HelmReleaseSource helmRelease={helmRelease}/>
         <HelmReleaseValues helmRelease={helmRelease}/>
         <HelmReleasePostRenderer helmRelease={helmRelease}/>

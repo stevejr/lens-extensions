@@ -16,6 +16,9 @@ import { HelmRelease } from "./src/helm-controller/helmrelease";
 import { HelmReleaseDetailsItem } from "./src/helm-controller/details/helmrelease-details-item";
 import { HelmRepository } from "./src/source-controller/helmrepository";
 import { HelmRepositoryDetailsItem } from "./src/source-controller/details/helmrepository-details-item";
+import { clusterSettings } from "./src/renderer/cluster-settings";
+import { KubeResourcePage } from "./src/pages/kuberesourcepage";
+import { KubeForceChart } from "./src/resourcemap/kubeforcechart";
 
 const enum id {
   bucket = "bucket",
@@ -24,7 +27,8 @@ const enum id {
   helmRepository = "helmrepository",
   sources = "sources",
   kustomize = "kustomize",
-  helmRelease = "helmrelease"
+  helmRelease = "helmrelease",
+  resourceMap = "resourcemap"
 }
 
 export function DashboardIcon(props: Renderer.Component.IconProps) {
@@ -69,6 +73,12 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         components: {
           Page: () => <KustomizationsPage extension={this}/>,
         }
+      },
+      {
+        id: id.resourceMap,
+        components: {
+          Page: () => <KubeResourcePage extension={this}/>,
+        }
       }
     ];
 
@@ -81,6 +91,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.bucket,
         parentId: "flux",
         target: {pageId: id.bucket},
         title: "Bucket Sources",
@@ -89,6 +100,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.sources,
         parentId: "flux",
         target: {pageId: id.sources},
         title: "GitRepository Sources",
@@ -97,6 +109,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.helmChart,
         parentId: "flux",
         target: {pageId: id.helmChart},
         title: "HelmChart Sources",
@@ -105,6 +118,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.helmRelease,
         parentId: "flux",
         target: {pageId: id.helmRelease},
         title: "HelmReleases",
@@ -113,6 +127,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.helmRepository,
         parentId: "flux",
         target: {pageId: id.helmRepository},
         title: "HelmRepository Sources",
@@ -121,11 +136,21 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: id.kustomize,
         parentId: "flux",
         target: {pageId: id.kustomize},
         title: "Kustomizations",
         components: {
           Icon: DashboardIcon
+        }
+      },
+      {
+        id: id.resourceMap,
+        parentId: "flux",
+        target: {pageId: id.resourceMap},
+        title: "Resource Map",
+        components: {
+          Icon: MenuIcon
         }
       },
     ];
@@ -172,4 +197,33 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       }
     ];
+
+    kubeWorkloadsOverviewItems = [
+      {
+        priority: 25,
+        components : {
+          Details: () => { return (
+            <div className="ResourceMapOverviewDetail">
+              <div className="header flex gaps align-center">
+                <h5 className="box grow">Resources</h5>
+              </div>
+              <div className="content">
+                <KubeForceChart height={480} />
+              </div>
+            </div>
+          )}
+        }
+      }
+    ]
+
+    entitySettings = [...clusterSettings]
+}
+
+export function MenuIcon(props: Renderer.Component.IconProps): React.ReactElement {
+  return (
+    <Renderer.Component.Icon
+      material="bubble_chart"
+      onClick={() => this.navigate()}
+    />
+  )
 }

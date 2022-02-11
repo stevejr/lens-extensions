@@ -37,23 +37,8 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
     await gitRepositoryStore.loadAll();
   }
 
-  getSourceRefLink(kustomization: Kustomization) {
-    const { kind, name } = kustomization.spec.sourceRef;
-
-    switch (kind) {
-      case "Bucket":
-        const bucket = bucketStore.getByName(name);
-
-        return bucket.selfLink;
-      case "GitRepository":
-        const gitRepo = gitRepositoryStore.getByName(name);
-
-        return gitRepo.selfLink;
-    } 
-  }
-
   getSource(kustomization: Kustomization) {
-    const selfLink = this.getSourceRefLink(kustomization);
+    const selfLink = kustomization.getSourceRef(kustomization.spec.sourceRef.name, kustomization.spec.sourceRef.kind).selfLink;
 
     return <><Badge flat key={kustomization.spec.sourceRef.kind} className="sourceRef" tooltip={kustomization.spec.sourceRef.name} expandable={false} onClick={stopPropagation}>
       <Link to={getDetailsUrl(selfLink)}>

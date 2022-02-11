@@ -35,7 +35,6 @@ const cmStore: Renderer.K8sApi.KubeObjectStore<ConfigMap> =
 const secretStore: Renderer.K8sApi.KubeObjectStore<Secret> =
   Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
 
-
 @observer
 export class PostBuildFrom extends React.Component<Props> {
   sortingCallbacks = {
@@ -48,13 +47,13 @@ export class PostBuildFrom extends React.Component<Props> {
     await secretStore.loadAll();
   }
 
-  getSubstituteFrom(kind: string, name: string) {
+  getSubstituteStore(kind: string) {
     switch (kind) {
       case "ConfigMap":
-        return cmStore.getByName(name);
+        return cmStore;
       case "Secret":
-        return secretStore.getByName(name);
-    } 
+        return secretStore;
+    }
   }
 
   render() {
@@ -84,7 +83,7 @@ export class PostBuildFrom extends React.Component<Props> {
           </TableHead>
           {
             postBuild.substituteFrom.map(sub => {
-              const subSelfLink = this.getSubstituteFrom(sub.kind, sub.name).selfLink;
+              const subSelfLink = kustomization.getSubstituteFrom(sub.name, this.getSubstituteStore(sub.kind)).selfLink;
 
               return (
                 <TableRow

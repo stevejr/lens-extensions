@@ -1,4 +1,6 @@
 import { Renderer } from "@k8slens/extensions";
+import { bucketStore } from "../source-controller/bucket-store";
+import { gitRepositoryStore } from "../source-controller/gitrepository-store";
 
 export class Kustomization extends Renderer.K8sApi.KubeObject {
   static kind = "Kustomization";
@@ -14,6 +16,24 @@ export class Kustomization extends Renderer.K8sApi.KubeObject {
   getDependsOn() {
     return this.spec?.dependsOn ?? [];
   }
+
+  getSourceRef(name: string, kind: string): Renderer.K8sApi.KubeObject {
+    const store = this.getSourceStore(kind);
+    return store.getByName(name);
+  } 
+
+  getSubstituteFrom(name: string, store: Renderer.K8sApi.KubeObjectStore): Renderer.K8sApi.KubeObject {
+    return store.getByName(name);
+  }
+
+  private getSourceStore(kind: string) {
+    switch (kind) {
+      case "Bucket":
+        return bucketStore;
+      case "GitRepository":
+        return gitRepositoryStore;
+    }
+  } 
 }
 
 export type KustomizationMetadata = {
