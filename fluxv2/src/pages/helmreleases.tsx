@@ -90,17 +90,21 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
           {title: "Name", className: "name", sortBy: sortBy.name},
           {title: "Namespace", className: "namespace", sortBy: sortBy.namespace},
           {title: "Source", className: "source"},
-          {title: "Ready", className: "ready"},
           {title: "Version", className: "version"},
-          {title: "Last Applied Revision", className: "lastAppliedRevision"},
+          {title: "Ready", className: "ready"},
+          {title: "Message", className: "message"},
+          {title: "Revision", className: "lastAppliedRevision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(helmRelease: HelmRelease) => [
           helmRelease.getName(),
           helmRelease.metadata.namespace,
           this.getSource(helmRelease),
-          this.checkSuspended(helmRelease),
           helmRelease.spec?.chart?.spec?.version ?? "",
-          helmRelease.status?.lastAppliedRevision ?? ""
+          helmRelease.status?.conditions[0].status ?? "",
+          helmRelease.getShortenCommitSha(helmRelease.status?.conditions[0].message) ?? "",
+          helmRelease.getShortenCommitSha(helmRelease.status?.lastAppliedRevision) ?? "",
+          helmRelease.isSuspended(),
         ]}
       />
     );

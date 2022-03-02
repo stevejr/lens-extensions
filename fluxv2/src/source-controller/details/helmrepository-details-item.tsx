@@ -1,7 +1,6 @@
 import { Renderer } from "@k8slens/extensions";
 import React from "react";
 import { observer } from "mobx-react";
-import { Secret } from "@k8slens/extensions/dist/src/renderer/api/endpoints";
 import { Link } from "react-router-dom";
 import { HelmRepository } from "../helmrepository";
 
@@ -14,12 +13,8 @@ const {
   }
 } = Renderer;
 
-const secretStore: Renderer.K8sApi.KubeObjectStore<Secret> =
+const secretStore: Renderer.K8sApi.KubeObjectStore<Renderer.K8sApi.Secret> =
   Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
-
-interface Props {
-  helmRepository: HelmRepository;
-}
 
 @observer
 export class HelmRepositoryDetailsItem extends React.Component<Renderer.Component.KubeObjectDetailsProps<HelmRepository>> {

@@ -62,12 +62,6 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
     </Badge></>;
   }
 
-  checkSuspended(kustomization: Kustomization) {
-    const ready = kustomization.spec?.suspend ? "Suspended" : kustomization.status.conditions[0].status;
-
-    return ready;
-  }
-
   render() {    
     return (
       <Renderer.Component.KubeObjectListLayout 
@@ -87,15 +81,19 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
           {title: "Source", className: "Source"},
           {title: "Path", className: "path"},
           {title: "Ready", className: "ready"},
-          {title: "Last Applied Revision", className: "revision"},
+          {title: "Message", className: "message"},
+          {title: "Revision", className: "revision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(kustomization: Kustomization) => [
           kustomization.getName(),
           kustomization.metadata.namespace,
           this.getSource(kustomization),
           kustomization.spec?.path ?? "",
-          this.checkSuspended(kustomization),
-          kustomization.status.lastAppliedRevision
+          kustomization.status?.conditions[0].status ?? "",
+          kustomization.getShortenCommitSha(kustomization.status?.conditions[0].message) ?? "",
+          kustomization.getShortenCommitSha(kustomization.status?.lastAppliedRevision) ?? "",
+          kustomization.isSuspended(),
         ]}
       />
     );

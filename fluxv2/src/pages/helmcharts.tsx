@@ -15,7 +15,6 @@ const enum sortBy {
   ownerName = "ownername",
   ownerKind = "ownerkind",
   age = "age",
-
 }
 
 const {
@@ -70,12 +69,6 @@ export class HelmChartsPage extends React.Component<{ extension: Renderer.LensEx
     </Badge></>;
   }
 
-  checkSuspended(helmChart: HelmChart) {
-    const ready = helmChart.spec?.suspend ? "Suspended" : helmChart.status.conditions[0].status;
-
-    return ready;
-  }
-
   render() {
     return (
       <Renderer.Component.KubeObjectListLayout 
@@ -93,17 +86,21 @@ export class HelmChartsPage extends React.Component<{ extension: Renderer.LensEx
           {title: "Name", className: "name", sortBy: sortBy.name},
           {title: "Namespace", className: "namespace", sortBy: sortBy.namespace},
           {title: "Source", className: "source"},
-          {title: "Ready", className: "ready"},
           {title: "Version", className: "version"},
+          {title: "Ready", className: "ready"},
+          {title: "Message", className: "message"},
           {title: "Revision", className: "revision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(helmChart: HelmChart) => [
           helmChart.getName(),
           helmChart.metadata.namespace,
           this.getSource(helmChart),
-          this.checkSuspended(helmChart),
           helmChart.spec?.version ?? "",
-          helmChart.status.artifact.revision ?? ""
+          helmChart.status?.conditions[0].status ?? "",
+          helmChart.getShortenCommitSha(helmChart.status?.conditions[0].message),
+          helmChart.status?.artifact?.revision ?? "",
+          helmChart.isSuspended(),
         ]}
       />
     );

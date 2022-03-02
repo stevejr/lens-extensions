@@ -55,15 +55,19 @@ export class GitRepositoriesPage extends React.Component<{ extension: Renderer.L
           {title: "URL", className: "url", sortBy: sortBy.url},
           {title: "Git Reference", className: "gitRef"},
           {title: "Ready", className: "ready"},
+          {title: "Message", className: "message"},
           {title: "Revision", className: "revision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(gitRepository: GitRepository) => [
           gitRepository.getName(),
           gitRepository.metadata.namespace,
           gitRepository.spec.url,
           this.getGitRef(gitRepository),
-          this.checkSuspended(gitRepository),
-          gitRepository.status?.artifact?.revision ?? ""
+          gitRepository.status?.conditions[0].status ?? "",
+          gitRepository.getShortenCommitSha(gitRepository.status?.conditions[0].message),
+          gitRepository.getShortenCommitSha(gitRepository.status?.artifact?.revision) ?? "",
+          gitRepository.isSuspended(),
         ]}
       />
     );
