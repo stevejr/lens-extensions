@@ -1,6 +1,6 @@
-import { Renderer } from "@k8slens/extensions";
+import { BaseFluxController } from "../base-controller/base";
 
-export class HelmRepository extends Renderer.K8sApi.KubeObject {
+export class HelmRepository extends BaseFluxController {
   static kind = "HelmRepository";
   static namespaced = true;
   static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmrepositories";

@@ -39,7 +39,9 @@ export class BucketsPage extends React.Component<{ extension: Renderer.LensExten
           {title: "Bucket Endpoint", className: "bucketEndpoint"},
           {title: "Bucket Region", className: "bucketRegion"},
           {title: "Ready", className: "ready"},
-
+          {title: "Message", className: "message"},
+          {title: "Revision", className: "revision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(bucket: Bucket) => [
           bucket.getName(),
@@ -47,7 +49,10 @@ export class BucketsPage extends React.Component<{ extension: Renderer.LensExten
           bucket.spec.bucketName,
           bucket.spec.endpoint,
           bucket.spec?.region ?? "",
-          this.checkSuspended(bucket)
+          bucket.status?.conditions[0].status ?? "",
+          bucket.getShortenCommitSha(bucket.status?.conditions[0].message),
+          bucket.status?.artifact?.revision ?? "",
+          bucket.isSuspended(),
         ]}
       />
     );

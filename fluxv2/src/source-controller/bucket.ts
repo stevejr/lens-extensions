@@ -1,6 +1,5 @@
-import { Renderer } from "@k8slens/extensions";
-
-export class Bucket extends Renderer.K8sApi.KubeObject {
+import { BaseFluxController } from "../base-controller/base";
+export class Bucket extends BaseFluxController {
   static kind = "Bucket";
   static namespaced = true;
   static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/buckets";

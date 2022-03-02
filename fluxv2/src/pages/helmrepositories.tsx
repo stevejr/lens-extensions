@@ -36,15 +36,18 @@ export class HelmRepositoriesPage extends React.Component<{ extension: Renderer.
           {title: "Namespace", className: "namespace", sortBy: sortBy.namespace},
           {title: "URL", className: "url", sortBy: sortBy.url},
           {title: "Ready", className: "ready"},
+          {title: "Message", className: "message"},
           {title: "Revision", className: "revision"},
+          {title: "Suspended", className: "suspended"}
         ]}
         renderTableContents={(helmRepository: HelmRepository) => [
           helmRepository.getName(),
           helmRepository.metadata.namespace,
           helmRepository.spec.url,
-          // <Link to={helmRepository.spec.url}>{helmRepository.spec.url}</Link>, - how to open in a browser?
-          this.checkSuspended(helmRepository),
-          helmRepository.status?.artifact?.revision ?? ""
+          helmRepository.status?.conditions[0].status ?? "",
+          helmRepository.getShortenCommitSha(helmRepository.status?.conditions[0].message, 64) ?? "",
+          helmRepository.getShortenCommitSha(helmRepository.status?.artifact?.revision, 64) ?? "",
+          helmRepository.isSuspended()
         ]}
       />
     );
