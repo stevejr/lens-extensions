@@ -6,7 +6,6 @@ import { kustomizationStore } from "../kustomize-controller/kustomization-store"
 import { bucketStore } from "../source-controller/bucket-store";
 import { gitRepositoryStore } from "../source-controller/gitrepository-store";
 
-
 const enum sortBy {
   name = "name",
   namespace = "namespace",
@@ -32,11 +31,6 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
     return <>Kind: {kustomization.spec.sourceRef.kind}<br />Name: {kustomization.spec.sourceRef.name}</>;
   }
 
-  async componentDidMount() {
-    await bucketStore.loadAll();
-    await gitRepositoryStore.loadAll();
-  }
-
   getSourceRefLink(kustomization: Kustomization) {
     const { kind, name } = kustomization.spec.sourceRef;
 
@@ -44,16 +38,20 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
       case "Bucket":
         const bucket = bucketStore.getByName(name);
 
-        return bucket.selfLink;
+        return bucket?.selfLink;
       case "GitRepository":
         const gitRepo = gitRepositoryStore.getByName(name);
 
-        return gitRepo.selfLink;
-    } 
+        return gitRepo?.selfLink;
+    }
   }
 
   getSource(kustomization: Kustomization) {
     const selfLink = this.getSourceRefLink(kustomization);
+
+    if (!selfLink) {
+      return null;
+    }
 
     return <><Badge flat key={kustomization.spec.sourceRef.kind} className="sourceRef" tooltip={kustomization.spec.sourceRef.name} expandable={false} onClick={stopPropagation}>
       <Link to={getDetailsUrl(selfLink)}>
@@ -62,11 +60,12 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
     </Badge></>;
   }
 
-  render() {    
+  render() {
     return (
-      <Renderer.Component.KubeObjectListLayout 
+      <Renderer.Component.KubeObjectListLayout
         tableId="kustomizationTable"
         className="Kustomization" store={kustomizationStore}
+        dependentStores={[bucketStore, gitRepositoryStore]}
         sortingCallbacks={{
           [sortBy.name]: (kustomization: Kustomization) => kustomization.getName(),
           [sortBy.namespace]: (kustomization: Kustomization) => kustomization.metadata.namespace,
