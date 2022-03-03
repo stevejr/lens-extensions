@@ -32,12 +32,6 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
     return <>Kind: {helmRelease.spec.chart.spec.sourceRef.kind}<br />Name: {helmRelease.spec.chart.spec.sourceRef.name}</>;
   }
 
-  async componentDidMount() {
-    await bucketStore.loadAll();
-    await gitRepositoryStore.loadAll();
-    await helmRepositoryStore.loadAll();
-  }
-
   getSourceRefLink(helmRelease: HelmRelease) {
     const { kind, name } = helmRelease.spec.chart.spec.sourceRef;
 
@@ -45,20 +39,24 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
       case "Bucket":
         const bucket = bucketStore.getByName(name);
 
-        return bucket.selfLink;
+        return bucket?.selfLink;
       case "GitRepository":
         const gitRepo = gitRepositoryStore.getByName(name);
 
-        return gitRepo.selfLink;
+        return gitRepo?.selfLink;
       case "HelmRepository":
         const helmRepo = helmRepositoryStore.getByName(name);
 
-        return helmRepo.selfLink;
+        return helmRepo?.selfLink;
     } 
   }
 
   getSource(helmRelease: HelmRelease) {
     const selfLink = this.getSourceRefLink(helmRelease);
+
+    if (!selfLink) {
+      return null;
+    }
 
     return <><Badge flat key={helmRelease.spec.chart.spec.sourceRef.kind} className="sourceRef" tooltip={helmRelease.spec.chart.spec.sourceRef.name} expandable={false} onClick={stopPropagation}>
       <Link to={getDetailsUrl(selfLink)}>
@@ -73,11 +71,12 @@ export class HelmReleasesPage extends React.Component<{ extension: Renderer.Lens
     return ready;
   }
 
-  render() {    
+  render() {
     return (
       <Renderer.Component.KubeObjectListLayout 
         tableId="helmReleaseTable"
         className="HelmRelease" store={helmReleaseStore}
+        dependentStores={[bucketStore, gitRepositoryStore, helmRepositoryStore]}
         sortingCallbacks={{
           [sortBy.name]: (helmRelease: HelmRelease) => helmRelease.getName(),
           [sortBy.namespace]: (helmRelease: HelmRelease) => helmRelease.metadata.namespace,
