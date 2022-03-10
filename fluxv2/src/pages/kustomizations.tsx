@@ -88,7 +88,7 @@ export class KustomizationsPage extends React.Component<{ extension: Renderer.Le
           kustomization.getName(),
           kustomization.metadata.namespace,
           this.getSource(kustomization),
-          kustomization.spec?.path ?? "",
+          kustomization.spec?.path ?? ".",
           kustomization.status?.conditions[0].status ?? "",
           kustomization.getShortenCommitSha(kustomization.status?.conditions[0].message) ?? "",
           kustomization.getShortenCommitSha(kustomization.status?.lastAppliedRevision) ?? "",
