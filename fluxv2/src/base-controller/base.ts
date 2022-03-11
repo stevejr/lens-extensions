@@ -11,11 +11,14 @@ export class BaseFluxController extends Renderer.K8sApi.KubeObject {
   }
 
   getShortenCommitSha(msg: string, shaLength = 40) {
-    const shaRegex = `([a-f0-9]{${shaLength}})$`;
-    const sha = msg.match(shaRegex);
+    if (typeof msg !== undefined && msg) {
 
-    if (sha?.[0]) {
-      msg = msg.replace(sha[0], sha[0].slice(0, 7));
+      const shaRegex = `([a-f0-9]{${shaLength}})$`;
+      const sha = msg.match(shaRegex);
+
+      if (sha?.[0]) {
+        msg = msg.replace(sha[0], sha[0].slice(0, 7));
+      }
     }
 
     return msg;
