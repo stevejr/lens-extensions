@@ -192,14 +192,14 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
       {
         kind: "HelmRelease",
-        apiVersions: ["helm.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
         components: {
           MenuItem: (props: FluxSuspendMenuProps) => <FluxSuspendMenu {...props} />,
         },
       },
       {
         kind: "HelmRelease",
-        apiVersions: ["helm.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
         components: {
           MenuItem: (props: FluxReconcileMenuProps) => <FluxReconcileMenu {...props} />,
         },
