@@ -66,7 +66,7 @@ export class HelmChartSource extends React.Component<Props> {
 
     return (
       <div className="SourceRef flex column">
-        <DrawerTitle title="Source Ref"/>
+        <DrawerTitle>Source Ref</DrawerTitle>
         <Table
           selectable
           scrollable={false}

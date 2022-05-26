@@ -22,9 +22,11 @@ export class HelmReleaseValues extends React.Component<Props> {
 
     if (!helmRelease) return null;
 
+    if (!helmRelease.spec?.values) return null;
+
     return (
       <div className="Values flex column">
-        <DrawerTitle title="Values"/>
+        <DrawerTitle>Values</DrawerTitle>
         <div className="valueData">
           <Input
             multiLine

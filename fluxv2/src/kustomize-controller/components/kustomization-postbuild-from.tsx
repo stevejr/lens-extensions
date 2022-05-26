@@ -67,7 +67,7 @@ export class PostBuildFrom extends React.Component<Props> {
 
     return (
       <div className="PostBuildFrom flex column">
-        <DrawerTitle title="Post Build - Substitutes from CMs and Secrets"/>
+        <DrawerTitle>Post Build - Substitutes from CMs and Secrets</DrawerTitle>
         <Table
           selectable
           scrollable={false}

@@ -55,7 +55,7 @@ export class DependsOnList extends React.Component<Props> {
 
     return (
       <div className="DependsOn flex column">
-        <DrawerTitle title="DependsOn"/>
+        <DrawerTitle>DependsOn</DrawerTitle>
         <Table
           selectable
           scrollable={false}

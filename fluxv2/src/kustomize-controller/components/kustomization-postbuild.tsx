@@ -32,7 +32,7 @@ export class PostBuild extends React.Component<Props> {
 
     return (
       <div className="PostBuild flex column">
-        <DrawerTitle title="Post Build - Substitutes"/>
+        <DrawerTitle>Post Build - Substitutes</DrawerTitle>
         <Table
           selectable
           scrollable={false}

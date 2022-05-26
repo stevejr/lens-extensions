@@ -54,7 +54,7 @@ export class HelmReleasePostRenderer extends React.Component<Props> {
 
     return (
       <div className="PostRenderers flex column">
-        <DrawerTitle title="Post Renderers"/>
+        <DrawerTitle>Post Renderers</DrawerTitle>
         <div className="postRenderersData">
           <Input
             multiLine
