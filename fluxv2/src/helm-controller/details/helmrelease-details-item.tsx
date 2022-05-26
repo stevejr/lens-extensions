@@ -4,6 +4,7 @@ import { observer } from "mobx-react";
 import { HelmRelease } from "../helmrelease";
 import { HelmReleaseSource } from "../components/helmrelease-source";
 import { HelmReleaseValues } from "../components/helmrelease-values";
+import { HelmReleaseValuesFrom } from "../components/helmrelease-valuesfrom";
 import { HelmReleasePostRenderer } from "../components/helmrelease-postrenderer";
 
 const {
@@ -51,6 +52,7 @@ export class HelmReleaseDetailsItem extends React.Component<Renderer.Component.K
         </Renderer.Component.DrawerItem>
         <HelmReleaseSource helmRelease={helmRelease}/>
         <HelmReleaseValues helmRelease={helmRelease}/>
+        <HelmReleaseValuesFrom helmRelease={helmRelease}/>
         <HelmReleasePostRenderer helmRelease={helmRelease}/>
       </div>
     );

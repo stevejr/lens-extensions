@@ -43,7 +43,7 @@ export type HelmReleaseSpec = {
   test?: Test;
   rollback?: Rollback;
   uninstall?: Uninstall;
-  ValuesFrom?: ValuesReference[];
+  valuesFrom?: ValuesReference[];
   values?: JSON;
   kubeConfig?: KubeConfig;
   serviceAccountName?: string;
