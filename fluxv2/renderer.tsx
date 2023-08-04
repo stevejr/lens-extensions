@@ -83,6 +83,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "bucket-sources",
         parentId: "flux",
         target: {pageId: id.bucket},
         title: "Bucket Sources",
@@ -91,6 +92,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "gitrepo-sources",
         parentId: "flux",
         target: {pageId: id.sources},
         title: "GitRepository Sources",
@@ -99,6 +101,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "helmchart-sources",
         parentId: "flux",
         target: {pageId: id.helmChart},
         title: "HelmChart Sources",
@@ -107,6 +110,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "helmreleases",
         parentId: "flux",
         target: {pageId: id.helmRelease},
         title: "HelmReleases",
@@ -115,6 +119,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "helmrepo-sources",
         parentId: "flux",
         target: {pageId: id.helmRepository},
         title: "HelmRepository Sources",
@@ -123,6 +128,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
         }
       },
       {
+        id: "kustimzations",
         parentId: "flux",
         target: {pageId: id.kustomize},
         title: "Kustomizations",
