@@ -28,7 +28,6 @@ export class KustomizationDetailsItem extends React.Component<Renderer.Component
 
     return (
       <div className="KustomizationDetailsItem">
-        <KubeObjectMeta object={kustomization} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>

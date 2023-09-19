@@ -25,7 +25,6 @@ export class HelmChartDetailsItem extends React.Component<Renderer.Component.Kub
 
     return (
       <div className="HelmChartDetailsItem">
-        <KubeObjectMeta object={helmChart} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>

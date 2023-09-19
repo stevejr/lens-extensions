@@ -44,15 +44,8 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
 
     return (
       <div className="GitRepositoryDetailsItem">
-        <KubeObjectMeta object={gitRepository} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
-        </Renderer.Component.DrawerItem>
-        <Renderer.Component.DrawerItem name="Latest Condition Message">
-          {gitRepository.status?.conditions[0]?.message ?? ""}
-        </Renderer.Component.DrawerItem>
-        <Renderer.Component.DrawerItem name="Last Applied Revision">
-          {gitRepository.status.conditions[0].message}
         </Renderer.Component.DrawerItem>
         <Renderer.Component.DrawerItem name="URL">
           {gitRepository.spec?.url ?? ""}
@@ -63,9 +56,12 @@ export class GitRepositoryDetailsItem extends React.Component<Renderer.Component
         <Renderer.Component.DrawerItem name="Secret Ref">
           {this.getSecretRef(gitRepository)}
         </Renderer.Component.DrawerItem>
-        {/* <DependsOnList kustomization={kustomization}/>
-        <PostBuild kustomization={kustomization}/>
-        <PostBuildFrom kustomization={kustomization}/> */}
+        <Renderer.Component.DrawerItem name="Latest Condition Message">
+          {gitRepository.status?.conditions[0]?.message ?? ""}
+        </Renderer.Component.DrawerItem>
+        <Renderer.Component.DrawerItem name="Last Applied Revision">
+          {gitRepository.status.conditions[0].message}
+        </Renderer.Component.DrawerItem>
       </div>
     );
   }

@@ -44,7 +44,6 @@ export class HelmRepositoryDetailsItem extends React.Component<Renderer.Componen
 
     return (
       <div className="HelmRepositoryDetailsItem">
-        <KubeObjectMeta object={helmRepository} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>

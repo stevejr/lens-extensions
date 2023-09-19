@@ -28,7 +28,6 @@ export class HelmReleaseDetailsItem extends React.Component<Renderer.Component.K
 
     return (
       <div className="HelmReleaseDetailsItem">
-        <KubeObjectMeta object={helmRelease} />
         <Renderer.Component.DrawerItem name="Ready">
           {ready}
         </Renderer.Component.DrawerItem>
