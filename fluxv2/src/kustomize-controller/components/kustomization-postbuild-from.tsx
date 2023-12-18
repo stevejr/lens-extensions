@@ -28,11 +28,9 @@ enum sortBy {
   kind = "kind",
 }
 
-const cmStore: Renderer.K8sApi.KubeObjectStore<Renderer.K8sApi.ConfigMap> =
-  Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.configMapApi);
+const cmStore:Renderer.K8sApi.ConfigMapsStore = Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.configMapApi);
 
-const secretStore: Renderer.K8sApi.KubeObjectStore<Renderer.K8sApi.Secret> =
-  Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
+const secretStore: Renderer.K8sApi.SecretsStore = Renderer.K8sApi.apiManager.getStore(Renderer.K8sApi.secretsApi);
 
 
 @observer

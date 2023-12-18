@@ -66,7 +66,7 @@ export type HelmReleaseStatus = {
 
 export type Condition = {
   type: string;
-  status: ConditionStatus;
+  status: "True|False|Unknown";
   observedGeneration?: BigInt;
   lastTransitionTime: string;
   reason: string;

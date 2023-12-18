@@ -1,7 +1,6 @@
 import React, { useEffect, useState }  from "react";
 import { Renderer, Common } from "@k8slens/extensions";
-
-type FluxController = Renderer.K8sApi.KubeObject
+import { BaseFluxController } from "../base-controller/base";
 
 const {
   Component: {
@@ -13,7 +12,7 @@ const {
   Util,
 } = Common;
 
-export interface FluxSuspendMenuProps extends Renderer.Component.KubeObjectMenuProps<FluxController> {
+export interface FluxSuspendMenuProps extends Renderer.Component.KubeObjectMenuProps<BaseFluxController> {
 }
 
 export function FluxSuspendMenu({ object: controller, toolbar }: FluxSuspendMenuProps) {
