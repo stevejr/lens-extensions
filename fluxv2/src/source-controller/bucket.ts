@@ -2,7 +2,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class Bucket extends BaseFluxController {
   static kind = "Bucket";
   static namespaced = true;
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/buckets";
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta2/buckets";
 
   kind!: string;
   apiVersion!: string;

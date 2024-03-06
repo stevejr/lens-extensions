@@ -3,7 +3,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class HelmChart extends BaseFluxController {
   static kind = "HelmChart";
   static namespaced = true;
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmcharts";
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta2/helmcharts";
 
   kind!: string;
   apiVersion!: string;

@@ -4,7 +4,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class HelmRelease extends BaseFluxController {
   static kind = "HelmRelease";
   static namespaced = true;
-  static apiBase = "/apis/helm.toolkit.fluxcd.io/v2beta1/helmreleases";
+  static apiBase = "/apis/helm.toolkit.fluxcd.io/v2beta2/helmreleases";
 
   kind!: string;
   apiVersion!: string;

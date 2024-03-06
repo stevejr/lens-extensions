@@ -3,7 +3,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class HelmRepository extends BaseFluxController {
   static kind = "HelmRepository";
   static namespaced = true;
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/helmrepositories";
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta2/helmrepositories";
 
   kind!: string;
   apiVersion!: string;

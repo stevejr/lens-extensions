@@ -3,7 +3,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class Kustomization extends BaseFluxController {
   static kind = "Kustomization";
   static namespaced = true;
-  static apiBase = "/apis/kustomize.toolkit.fluxcd.io/v1beta1/kustomizations";
+  static apiBase = "/apis/kustomize.toolkit.fluxcd.io/v1/kustomizations";
 
   kind!: string;
   apiVersion!: string;

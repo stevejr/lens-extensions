@@ -3,7 +3,7 @@ import { BaseFluxController } from "../base-controller/base";
 export class GitRepository extends BaseFluxController {
   static kind = "GitRepository";
   static namespaced = true;
-  static apiBase = "/apis/source.toolkit.fluxcd.io/v1beta1/gitrepositories";
+  static apiBase = "/apis/source.toolkit.fluxcd.io/v1/gitrepositories";
 
   kind!: string;
   apiVersion!: string;
@@ -90,6 +90,7 @@ export type ConditionStatus = {
 };
 
 export type Artifact = {
+  digest: string;
   path: string;
   url: string;
   revision: string;

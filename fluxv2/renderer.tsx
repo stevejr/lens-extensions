@@ -141,7 +141,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
     kubeObjectDetailItems = [
       {
         kind: "GitRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<GitRepository>) => <GitRepositoryDetailsItem {...props} />
@@ -149,7 +149,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
       {
         kind: "HelmChart",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta2"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmChart>) => <HelmChartDetailsItem {...props} />
@@ -157,7 +157,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
       {
         kind: "HelmRelease",
-        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta2"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmRelease>) => <HelmReleaseDetailsItem {...props} />
@@ -165,7 +165,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
       {
         kind: "HelmRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta2"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<HelmRepository>) => <HelmRepositoryDetailsItem {...props} />
@@ -173,7 +173,7 @@ export default class FluxV2Extension extends Renderer.LensExtension {
       },
       {
         kind: "Kustomization",
-        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["kustomize.toolkit.fluxcd.io/v1"],
         priority: 10,
         components: {
           Details: (props: Renderer.Component.KubeObjectDetailsProps<Kustomization>) => <KustomizationDetailsItem {...props} />
@@ -184,56 +184,56 @@ export default class FluxV2Extension extends Renderer.LensExtension {
     kubeObjectMenuItems = [
       {
         kind: "GitRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1"],
         components: {
           MenuItem: (props: FluxSuspendMenuProps) => <FluxSuspendMenu {...props} />,
         },
       },
       {
         kind: "GitRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1"],
         components: {
           MenuItem: (props: FluxReconcileMenuProps) => <FluxReconcileMenu {...props} />,
         },
       },
       {
         kind: "HelmRelease",
-        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta2"],
         components: {
           MenuItem: (props: FluxSuspendMenuProps) => <FluxSuspendMenu {...props} />,
         },
       },
       {
         kind: "HelmRelease",
-        apiVersions: ["helm.toolkit.fluxcd.io/v2beta1"],
+        apiVersions: ["helm.toolkit.fluxcd.io/v2beta2"],
         components: {
           MenuItem: (props: FluxReconcileMenuProps) => <FluxReconcileMenu {...props} />,
         },
       },
       {
         kind: "HelmRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta2"],
         components: {
           MenuItem: (props: FluxSuspendMenuProps) => <FluxSuspendMenu {...props} />,
         },
       },
       {
         kind: "HelmRepository",
-        apiVersions: ["source.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["source.toolkit.fluxcd.io/v1beta2"],
         components: {
           MenuItem: (props: FluxReconcileMenuProps) => <FluxReconcileMenu {...props} />,
         },
       },
       {
         kind: "Kustomization",
-        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["kustomize.toolkit.fluxcd.io/v1"],
         components: {
           MenuItem: (props: FluxSuspendMenuProps) => <FluxSuspendMenu {...props} />,
         },
       },
       {
         kind: "Kustomization",
-        apiVersions: ["kustomize.toolkit.fluxcd.io/v1beta1"],
+        apiVersions: ["kustomize.toolkit.fluxcd.io/v1"],
         components: {
           MenuItem: (props: FluxReconcileMenuProps) => <FluxReconcileMenu {...props} />,
         },
